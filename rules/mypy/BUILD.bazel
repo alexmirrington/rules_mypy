@@ -1,0 +1,14 @@
+load("@pip//:requirements.bzl", "all_requirements")
+load("@rules_python//python:defs.bzl", "py_binary")
+
+exports_files([
+    "mypy.bash.tpl",
+    "__main__.py",
+])
+
+py_binary(
+    name = "__main__",
+    srcs = ["__main__.py"],
+    visibility = ["//visibility:public"],
+    deps = all_requirements,
+)
