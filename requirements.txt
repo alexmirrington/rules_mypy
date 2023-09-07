@@ -1,2 +1,3 @@
 pandas==2.1.0
 pandas-stubs==2.0.3.230814
+mypy==1.5.1

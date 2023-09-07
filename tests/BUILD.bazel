@@ -18,11 +18,3 @@ py_binary(
         requirement("pandas-stubs"),
     ],
 )
-
-py_binary(
-    name = "pandas_missing_stubs",
-    srcs = ["pandas_missing_stubs.py"],
-    deps = [
-        requirement("pandas"),
-    ],
-)
