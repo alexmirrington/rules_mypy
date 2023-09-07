@@ -1,0 +1,4 @@
+module(
+    name = "rules_mypy",
+    repo_name = "com_alexmirrington_rules_mypy",
+)
