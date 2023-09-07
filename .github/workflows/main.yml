@@ -1,0 +1,24 @@
+name: "main"
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    name: "check"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: "🛒 Checkout"
+        uses: actions/checkout@v3
+
+      - name: "✨ Lint"
+        uses: trunk-io/trunk-action@v1
