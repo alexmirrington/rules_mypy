@@ -1,0 +1,28 @@
+load("@pip//:requirements.bzl", "requirement")
+load("@rules_python//python:defs.bzl", "py_binary")
+
+py_binary(
+    name = "pandas_passes",
+    srcs = ["pandas_passes.py"],
+    deps = [
+        requirement("pandas"),
+        requirement("pandas-stubs"),
+    ],
+)
+
+py_binary(
+    name = "pandas_fails",
+    srcs = ["pandas_fails.py"],
+    deps = [
+        requirement("pandas"),
+        requirement("pandas-stubs"),
+    ],
+)
+
+py_binary(
+    name = "pandas_missing_stubs",
+    srcs = ["pandas_missing_stubs.py"],
+    deps = [
+        requirement("pandas"),
+    ],
+)
