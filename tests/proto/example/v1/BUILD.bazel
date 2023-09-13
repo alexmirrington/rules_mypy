@@ -1,0 +1,37 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_proto_grpc//buf:defs.bzl", "buf_proto_lint_test")
+load("@rules_python//python:defs.bzl", "py_library")
+load("//rules/proto:proto.bzl", "python_grpc_compile")
+
+proto_library(
+    name = "proto",
+    srcs = [
+        "example.proto",
+    ],
+    deps = [
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+)
+
+python_grpc_compile(
+    name = "proto_python_grpc_compile",
+    protos = ["proto"],
+    visibility = ["//visibility:private"],
+)
+
+py_library(
+    name = "grpc_mypy",
+    srcs = ["proto_python_grpc_compile"],
+    deps = ["@com_google_protobuf//:protobuf_python"],
+)
+
+buf_proto_lint_test(
+    name = "buf_proto_lint",
+    timeout = "short",
+    protos = ["proto"],
+    tags = ["lint"],
+    use_rules = [
+        "DEFAULT",
+        "COMMENTS",
+    ],
+)
