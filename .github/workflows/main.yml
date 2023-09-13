@@ -1,4 +1,4 @@
-name: "main"
+name: main
 
 on:
   pull_request:
@@ -8,17 +8,35 @@ on:
     branches:
       - main
 
+permissions: {}
+
 jobs:
-  check:
-    name: "check"
+  main:
+    name: main
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
 
     steps:
-      - name: "🛒 Checkout"
+      - name: 🛒 Checkout
         uses: actions/checkout@v3
 
-      - name: "✨ Lint"
+      - name: ✨ Lint
         uses: trunk-io/trunk-action@v1
+
+      - name: 🐍 Set up Bazelisk
+        uses: bazelbuild/setup-bazelisk@v2
+
+      - name: 💾 Mount Bazel cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/bazel
+          key: bazel
+
+      - name: 🔨 Build
+        run: make build
+
+      - name: 🎯 Test
+        run: make test
+# TODO(alexmirrington): Run mypy positive and negative tests
