@@ -14,6 +14,10 @@ repin:
 build:
 	bazel build ...
 
+.PHONY: test
+test:
+	bazel test ...
+
 .PHONY: build-mypy
 build-mypy:
 	bazel build --aspects //rules/mypy:mypy.bzl%mypy_aspect --output_groups=mypy ...
