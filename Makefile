@@ -9,9 +9,14 @@ fix:
 .PHONY: repin
 repin:
 	bazel run //:requirements.update
+	bazel run //:gazelle_python_manifest.update
+
+.PHONY: generate
+generate: repin
+	bazel run //:gazelle
 
 .PHONY: build
-build:
+build: generate
 	bazel build ...
 
 .PHONY: test

@@ -15,6 +15,22 @@ load("@rules_python//python:repositories.bzl", "python_register_toolchains", _ru
 
 _rules_python_repositories()
 
+# gazelle
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+
+go_register_toolchains(version = "1.19.6")
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
+gazelle_dependencies()
+
+# rules_python_gazelle_plugin
+load("@rules_python_gazelle_plugin//:deps.bzl", _py_gazelle_deps = "gazelle_deps")
+
+_py_gazelle_deps()
+
 # rules_proto_grpc base
 load("@rules_proto_grpc//:repositories.bzl", "rules_proto_grpc_repos", "rules_proto_grpc_toolchains")
 
@@ -41,10 +57,6 @@ rules_proto_grpc_python_repos()
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
-
-load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
-
-grpc_extra_deps()
 
 # ---------------
 # Toolchain setup
