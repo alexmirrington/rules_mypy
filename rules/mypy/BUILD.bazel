@@ -9,6 +9,7 @@ exports_files([
 py_binary(
     name = "__main__",
     srcs = ["__main__.py"],
+    main = "__main__.py",
     visibility = ["//visibility:public"],
-    deps = all_requirements,
+    deps = all_requirements,  # keep
 )

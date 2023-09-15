@@ -1,5 +1,5 @@
 load("@pip//:requirements.bzl", "requirement")
-load("@rules_python//python:defs.bzl", "py_binary")
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 
 py_binary(
     name = "pandas_passes",
@@ -17,4 +17,14 @@ py_binary(
         requirement("pandas"),
         requirement("pandas-stubs"),
     ],
+)
+
+py_library(
+    name = "tests",
+    srcs = [
+        "pandas_fails.py",
+        "pandas_passes.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = ["@pip_pandas//:pkg"],
 )
