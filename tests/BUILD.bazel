@@ -6,7 +6,6 @@ py_binary(
     srcs = ["pandas_passes.py"],
     deps = [
         requirement("pandas"),
-        requirement("pandas-stubs"),
     ],
 )
 
@@ -15,16 +14,27 @@ py_binary(
     srcs = ["pandas_fails.py"],
     deps = [
         requirement("pandas"),
-        requirement("pandas-stubs"),
+    ],
+)
+
+py_binary(
+    name = "google_passes",
+    srcs = ["google_passes.py"],
+    deps = [
+        requirement("protobuf"),
     ],
 )
 
 py_library(
     name = "tests",
     srcs = [
+        "google_passes.py",
         "pandas_fails.py",
         "pandas_passes.py",
     ],
     visibility = ["//:__subpackages__"],
-    deps = ["@pip_pandas//:pkg"],
+    deps = [
+        "@pip_pandas//:pkg",
+        "@pip_protobuf//:pkg",
+    ],
 )

@@ -16,7 +16,8 @@ MyPyAspectInfo = provider(
 
 # Switch to True only during debugging and development.
 # All releases should have this as False.
-DEBUG = False
+BASH_DEBUG = False
+MYPY_DEBUG = False
 
 VALID_EXTENSIONS = ["py", "pyi"]
 
@@ -25,6 +26,10 @@ DEFAULT_ATTRS = {
         default = Label("//rules/mypy:__main__"),
         executable = True,
         cfg = "exec",
+    ),
+    "_stubs": attr.label(
+        default = Label("//rules/mypy:all_stubs"),
+        executable = False,
     ),
     "_template": attr.label(
         default = Label("//rules/mypy:mypy.bash.tpl"),
@@ -66,6 +71,8 @@ def _extract_srcs(srcs):
 def _extract_transitive_deps(deps):
     transitive_deps = []
     for dep in deps:
+        # Transitive_sources are not defined for .pyi files in rules_python :pkg repository rules.
+        # This will only include .py sources so does not work for *-stubs packages
         if PyInfo in dep and not _is_external_dep(dep):
             transitive_deps.append(dep[PyInfo].transitive_sources)
     return transitive_deps
@@ -89,11 +96,10 @@ def _mypy_rule_impl(ctx, is_aspect = False):
     if is_aspect:
         base_rule = ctx.rule
 
-    mypypath_parts = []
+    # TODO(alexmirrington): Cleanup or pass through on pyinfo imports
+    mypypath_parts = ["/".join([ctx.bin_dir.path, ctx.attr._stubs.label.package, "stubs"])]
     direct_src_files = []
     transitive_srcs_depsets = []
-    stub_files = []
-
     if hasattr(base_rule.attr, "srcs"):
         direct_src_files = _extract_srcs(base_rule.attr.srcs)
 
@@ -101,7 +107,7 @@ def _mypy_rule_impl(ctx, is_aspect = False):
         transitive_srcs_depsets = _extract_transitive_deps(base_rule.attr.deps)
 
     if hasattr(base_rule.attr, "imports"):
-        mypypath_parts = _extract_imports(base_rule.attr.imports, ctx.label)
+        mypypath_parts += _extract_imports(base_rule.attr.imports, ctx.label)
 
     final_srcs_depset = depset(transitive = transitive_srcs_depsets +
                                             [depset(direct = direct_src_files)])
@@ -131,7 +137,9 @@ def _mypy_rule_impl(ctx, is_aspect = False):
     # Compose a list of the files needed for use. Note that aspect rules can use
     # the project version of mypy however, other rules should fall back on their
     # relative runfiles.
-    runfiles = ctx.runfiles(files = src_files + stub_files)
+    runfiles = ctx.runfiles(
+        files = src_files + ctx.attr._stubs[PyInfo].transitive_sources.to_list(),
+    )
     if not is_aspect:
         runfiles = runfiles.merge(ctx.attr._mypy_cli.default_runfiles)
 
@@ -156,8 +164,8 @@ def _mypy_rule_impl(ctx, is_aspect = False):
                 shell.quote(f.path) if is_aspect else shell.quote(f.short_path)
                 for f in src_files
             ]),
-            "{VERBOSE_BASH}": "set -x" if DEBUG else "",
-            "{VERBOSE_OPT}": "--verbose" if DEBUG else "",
+            "{VERBOSE_BASH}": "set -x" if BASH_DEBUG else "",
+            "{VERBOSE_OPT}": "--verbose" if MYPY_DEBUG else "",
         },
         is_executable = True,
     )
