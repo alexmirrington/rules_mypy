@@ -61,12 +61,26 @@ def _is_external_src(src_file):
     return src_file.path.startswith("external/")
 
 def _extract_srcs(srcs):
-    direct_src_files = []
+    """Include all .py and .pyi files, but .pyi files take precedence.
+
+    MyPy will error if we say to run over the same module with both its .py and .pyi files, so we
+    must be careful to only use the .pyi stub.
+    """
+    direct_src_files = {}
     for src in srcs:
         for f in src.files.to_list():
-            if f.extension in VALID_EXTENSIONS:
-                direct_src_files.append(f)
-    return direct_src_files
+            if f.extension == "pyi":
+                # Remove the equivalent .py source if it was alread proy registered
+                py_source_path = f.path[:-1]
+                if direct_src_files.get(py_source_path) != None:
+                    direct_src_files.pop(py_source_path)
+                direct_src_files[f.path] = f
+            elif f.extension == "py":
+                # Only add a .py file if an equivalent .pyi source is not already registered
+                pyi_source_path = f.path + "i"
+                if direct_src_files.get(pyi_source_path) != None:
+                    direct_src_files[f.path] = f
+    return direct_src_files.values()
 
 def _extract_transitive_deps(deps):
     transitive_deps = []

@@ -15,6 +15,7 @@ proto_library(
 
 python_grpc_compile(
     name = "proto_python_grpc_compile",
+    output_mode = "NO_PREFIX_FLAT",
     protos = ["proto"],
     visibility = ["//visibility:private"],
 )

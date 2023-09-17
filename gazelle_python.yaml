@@ -91,6 +91,34 @@ manifest:
     google.protobuf.unknown_fields: protobuf
     google.protobuf.util: protobuf
     google.protobuf.wrappers_pb2: protobuf
+    grpc: grpcio
+    grpc.aio: grpcio
+    grpc.beta: grpcio
+    grpc.beta.implementations: grpcio
+    grpc.beta.interfaces: grpcio
+    grpc.beta.utilities: grpcio
+    grpc.experimental: grpcio
+    grpc.experimental.aio: grpcio
+    grpc.experimental.gevent: grpcio
+    grpc.experimental.session_cache: grpcio
+    grpc.framework: grpcio
+    grpc.framework.common: grpcio
+    grpc.framework.common.cardinality: grpcio
+    grpc.framework.common.style: grpcio
+    grpc.framework.foundation: grpcio
+    grpc.framework.foundation.abandonment: grpcio
+    grpc.framework.foundation.callable_util: grpcio
+    grpc.framework.foundation.future: grpcio
+    grpc.framework.foundation.logging_pool: grpcio
+    grpc.framework.foundation.stream: grpcio
+    grpc.framework.foundation.stream_util: grpcio
+    grpc.framework.interfaces: grpcio
+    grpc.framework.interfaces.base: grpcio
+    grpc.framework.interfaces.base.base: grpcio
+    grpc.framework.interfaces.base.utilities: grpcio
+    grpc.framework.interfaces.face: grpcio
+    grpc.framework.interfaces.face.face: grpcio
+    grpc.framework.interfaces.face.utilities: grpcio
     mypy: mypy
     mypy.api: mypy
     mypy.applytype: mypy
@@ -2128,4 +2156,4 @@ manifest:
     tzdata.zoneinfo.US: tzdata
   pip_repository:
     name: pip
-integrity: 178b5d86c8229f4864b683db2a63043c42f83b51da5925f83cd98cf442b53d3e
+integrity: ed26eda8387a52a1295b7740005a4e587b3240c6a6ba742fed4f8ed20b357c6e
