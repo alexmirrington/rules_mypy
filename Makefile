@@ -12,7 +12,7 @@ repin:
 	bazel run //:gazelle_python_manifest.update
 
 .PHONY: generate
-generate: repin
+generate:
 	bazel run //:gazelle
 
 .PHONY: build

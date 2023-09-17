@@ -37,6 +37,9 @@ jobs:
       - name: 🔨 Build
         run: make build
 
+      - name: ✨ Verify working directory is clean
+        run: ./scripts/verify-clean.bash
+
       - name: 🎯 Test
         run: make test
 # TODO(alexmirrington): Run mypy positive and negative tests
