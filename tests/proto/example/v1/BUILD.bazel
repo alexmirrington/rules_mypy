@@ -22,7 +22,9 @@ python_grpc_compile(
 py_library(
     name = "grpc_mypy",
     srcs = ["proto_python_grpc_compile"],
-    deps = ["@com_google_protobuf//:protobuf_python"],
+    deps = [
+        "@com_google_protobuf//:protobuf_python",
+    ],
 )
 
 buf_proto_lint_test(
