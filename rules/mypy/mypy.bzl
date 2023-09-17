@@ -70,7 +70,7 @@ def _extract_srcs(srcs):
     for src in srcs:
         for f in src.files.to_list():
             if f.extension == "pyi":
-                # Remove the equivalent .py source if it was alread proy registered
+                # Remove the equivalent .py source if it was already registered
                 py_source_path = f.path[:-1]
                 if direct_src_files.get(py_source_path) != None:
                     direct_src_files.pop(py_source_path)
@@ -78,7 +78,7 @@ def _extract_srcs(srcs):
             elif f.extension == "py":
                 # Only add a .py file if an equivalent .pyi source is not already registered
                 pyi_source_path = f.path + "i"
-                if direct_src_files.get(pyi_source_path) != None:
+                if direct_src_files.get(pyi_source_path) == None:
                     direct_src_files[f.path] = f
     return direct_src_files.values()
 

@@ -18,6 +18,11 @@ Contributions are welcome!
 To use the rules in this repository at the current moment, you'll have to copy
 the rules over to your monorepo and tweak your setup to integrate it correctly.
 
+Note that the current implementation is roughly equivalent to `mypy --no-silence-site-packages $src_file`
+in terms of the errors it picks up, sincesymlinked stubs are not actually under a site-packages directory.
+
+TODO(alexmirrington): Ignore stub files either in config or automatically via CLI
+
 ## Features and Roadmap
 
 - [x] Integration with `rules_python` and `gazelle` for basic `mypy` type-checking via aspects
