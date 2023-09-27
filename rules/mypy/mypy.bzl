@@ -27,6 +27,10 @@ DEFAULT_ATTRS = {
         executable = True,
         cfg = "exec",
     ),
+    "_mypy_config": attr.label(
+        default = Label("//:.mypy.ini"),
+        allow_single_file = True,
+    ),
     "_stubs": attr.label(
         default = Label("//rules/mypy:all_stubs"),
         executable = False,
@@ -110,6 +114,8 @@ def _mypy_rule_impl(ctx, is_aspect = False):
     if is_aspect:
         base_rule = ctx.rule
 
+    mypy_config_file = ctx.file._mypy_config
+
     # TODO(alexmirrington): Cleanup or pass through on pyinfo imports
     mypypath_parts = ["/".join([ctx.bin_dir.path, ctx.attr._stubs.label.package, "stubs"])]
     direct_src_files = []
@@ -152,7 +158,7 @@ def _mypy_rule_impl(ctx, is_aspect = False):
     # the project version of mypy however, other rules should fall back on their
     # relative runfiles.
     runfiles = ctx.runfiles(
-        files = src_files + ctx.attr._stubs[PyInfo].transitive_sources.to_list(),
+        files = src_files + ctx.attr._stubs[PyInfo].transitive_sources.to_list() + [mypy_config_file],
     )
     if not is_aspect:
         runfiles = runfiles.merge(ctx.attr._mypy_cli.default_runfiles)
@@ -168,6 +174,7 @@ def _mypy_rule_impl(ctx, is_aspect = False):
             "{CACHE_MAP_TRIPLES}": " ".join(_sources_to_cache_map_triples(src_files, is_aspect)),
             "{MYPYPATH_PATH}": mypypath if mypypath else "",
             "{MYPY_EXE}": ctx.executable._mypy_cli.path,
+            "{MYPY_INI_PATH}": mypy_config_file.path,
             "{MYPY_ROOT}": ctx.executable._mypy_cli.root.path,
             "{OUTPUT}": out.path if out else "",
             "{PACKAGE_ROOTS}": " ".join([
