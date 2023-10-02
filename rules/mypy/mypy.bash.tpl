@@ -15,19 +15,17 @@ main() {
   report_file="{OUTPUT}"
   root="{MYPY_ROOT}/"
   mypy="{MYPY_EXE}"
-
   # TODO(Jonathon): Consider UX improvements using https://mypy.readthedocs.io/en/stable/command_line.html#configuring-error-messages
 
   export MYPYPATH="$(pwd):{MYPYPATH_PATH}"
-
   # Workspace rules run in a different location from aspect rules. Here we
   # normalize if the external source isn't found.
   if [ ! -f $mypy ]; then
     mypy=${mypy#${root}}
   fi
-
+  
   set +o errexit
-  output=$($mypy {VERBOSE_OPT} --bazel {PACKAGE_ROOTS} --config-file {MYPY_INI_PATH} --cache-map {CACHE_MAP_TRIPLES} -- {SRCS} 2>&1)
+  output=$($mypy {VERBOSE_OPT} --python-executable "{PY_INTERPRETER}" --bazel {PACKAGE_ROOTS} --config-file {MYPY_INI_PATH} --cache-map {CACHE_MAP_TRIPLES} -- {SRCS} 2>&1)
   status=$?
   set -o errexit
 

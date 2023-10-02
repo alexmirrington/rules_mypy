@@ -42,3 +42,10 @@ def install_internal_deps():
         strip_prefix = "rules_proto_grpc-4.5.0",
         urls = ["https://github.com/rules-proto-grpc/rules_proto_grpc/releases/download/4.5.0/rules_proto_grpc-4.5.0.tar.gz"],
     )
+
+    http_archive(
+        name = "rules_pyvenv",
+        sha256 = "3a3cc6e211850178de02b618d301f3f39d1a9cddb54d499d816ff9ea835a2834",
+        strip_prefix = "rules_pyvenv-1.2",
+        url = "https://github.com/cedarai/rules_pyvenv/archive/refs/tags/v1.2.tar.gz",
+    )

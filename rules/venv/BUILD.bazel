@@ -1,0 +1,13 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+
+exports_files([
+    "build_env.py",
+])
+
+py_binary(
+    name = "build_env",
+    srcs = ["build_env.py"],
+    main = "build_env.py",
+    visibility = ["//visibility:public"],
+    deps = ["@rules_pyvenv//vendor/importlib_metadata"],
+)

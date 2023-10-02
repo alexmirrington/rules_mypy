@@ -39,6 +39,11 @@ DEFAULT_ATTRS = {
         default = Label("//rules/mypy:mypy.bash.tpl"),
         allow_single_file = True,
     ),
+    "_venv": attr.label(
+        default = Label("//rules/mypy:virtualenv"),
+        executable = True,
+        cfg = "exec",
+    ),
 }
 
 def _sources_to_cache_map_triples(srcs, is_aspect):
@@ -160,13 +165,13 @@ def _mypy_rule_impl(ctx, is_aspect = False):
     runfiles = ctx.runfiles(
         files = src_files + ctx.attr._stubs[PyInfo].transitive_sources.to_list() + [mypy_config_file],
     )
+    runfiles = runfiles.merge(ctx.attr._venv.default_runfiles)
     if not is_aspect:
         runfiles = runfiles.merge(ctx.attr._mypy_cli.default_runfiles)
 
     src_root_paths = sets.to_list(
         sets.make([f.root.path for f in src_files]),
     )
-
     ctx.actions.expand_template(
         template = ctx.file._template,
         output = exe,
@@ -181,6 +186,7 @@ def _mypy_rule_impl(ctx, is_aspect = False):
                 "--package-root " + shell.quote(path or ".")
                 for path in src_root_paths
             ]),
+            "{PY_INTERPRETER}": "/Users/alex/Documents/repos/rules_mypy/bazel-out/darwin_arm64-fastbuild/bin/rules/mypy/virtualenv/bin/python3",
             "{SRCS}": " ".join([
                 shell.quote(f.path) if is_aspect else shell.quote(f.short_path)
                 for f in src_files
