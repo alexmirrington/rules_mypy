@@ -19,9 +19,8 @@ To use the rules in this repository at the current moment, you'll have to copy
 the rules over to your monorepo and tweak your setup to integrate it correctly.
 
 Note that the current implementation is roughly equivalent to `mypy --no-silence-site-packages $src_file`
-in terms of the errors it picks up, sincesymlinked stubs are not actually under a site-packages directory.
-
-TODO(alexmirrington): Ignore stub files either in config or automatically via CLI
+in terms of the errors it picks up, since symlinked stubs are not actually under a site-packages directory
+and are instead treated as source files. To get around this, we ignore all errors from these packages in `.mypy.ini`.
 
 ## Features and Roadmap
 
