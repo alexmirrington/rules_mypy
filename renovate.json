@@ -1,4 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"]
+  "extends": ["config:base"],
+  "allowedPostUpgradeCommands": ["^make repin$"],
+  "postUpgradeTasks": {
+    "commands": ["make repin"],
+    "fileFilters": ["requirements.txt"],
+    "executionMode": "update"
+  }
 }
