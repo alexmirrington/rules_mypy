@@ -22,6 +22,7 @@ build: generate
 .PHONY: test
 test:
 	bazel test ...
+	./tests/shell/test_mypy.sh
 
 .PHONY: build-mypy
 build-mypy:
