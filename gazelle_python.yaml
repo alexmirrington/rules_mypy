@@ -2156,4 +2156,4 @@ manifest:
     tzdata.zoneinfo.US: tzdata
   pip_repository:
     name: pip
-integrity: ed26eda8387a52a1295b7740005a4e587b3240c6a6ba742fed4f8ed20b357c6e
+integrity: b7ec913a9aa8b9ce06b7598bd3acd9d9399ceaee83cc47284ef3ced59619a2f3
