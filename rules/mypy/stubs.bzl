@@ -22,15 +22,9 @@ def _extract_stub_deps(ctx, deps):
                     if part.endswith("-stubs"):
                         is_stubs_only = True
 
-                        # Append the part with the `-stubs` suffix to let mypy resolve
-                        # the PEP-561 stubs naturally, given the correct MYPYPATH
-                        # Uncommenting the below causes google to fail and pandas to pass :'(
-                        # TODO(alexmirrington): Try adding an __init__.pyi or py.typed file to symlinked google stubs and uncomment?
-                        parts.append(part)
-
                         # Append the part with the `-stubs` suffix removed so that the
                         # stubs package has the correct imports once resolved my mypy
-                        # parts.append(part.removesuffix("-stubs"))
+                        parts.append(part.removesuffix("-stubs"))
                         continue
                     if has_site_packages and is_stubs_only:
                         parts.append(part)
