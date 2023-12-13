@@ -1,15 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices"],
-  "packageRules": [
-    {
-      "matchManagers": ["pip_requirements"],
-      "postUpgradeTasks": {
-        "commands": [
-          "bazel run //:requirements.update",
-          "bazel run //:gazelle_python_manifest.update"
-        ]
-      }
-    }
-  ]
+  "extends": ["config:best-practices"]
 }
