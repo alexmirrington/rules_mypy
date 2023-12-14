@@ -23,13 +23,13 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
       - name: ✨ Lint
-        uses: trunk-io/trunk-action@v1
+        uses: trunk-io/trunk-action@97ecd21fe6c743bf7a606791584b683a7995c70e # v1
 
       - name: 🐍 Set up Bazelisk
-        uses: bazelbuild/setup-bazelisk@v2
+        uses: bazelbuild/setup-bazelisk@95c9bf48d0c570bb3e28e57108f3450cd67c1a44 # v2
 
       - name: 💾 Mount Bazel cache
-        uses: actions/cache@v3
+        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
         with:
           path: ~/.cache/bazel
           key: bazel
