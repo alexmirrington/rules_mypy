@@ -12,7 +12,7 @@ py_binary(
     srcs = ["__main__.py"],
     main = "__main__.py",
     visibility = ["//visibility:public"],
-    deps = all_requirements,  # keep
+    deps = ["@pip_mypy//:pkg"],
 )
 
 py_stubs(
