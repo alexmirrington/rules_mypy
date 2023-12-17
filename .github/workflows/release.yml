@@ -1,23 +1,18 @@
-name: main
+# Create a release whenever a new tag is pushed to the repo.
+# You should use an annotated tag, like `git tag -a v1.2.3`
+# and put the release notes into the commit message for the tag.
+name: Release
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
-    branches:
-      - main
+    tags:
+      - "*.*.*"
 
 permissions: {}
 
 jobs:
-  main:
-    name: main
+  build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-
     steps:
       - name: 🛒 Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
@@ -43,3 +38,15 @@ jobs:
 
       - name: 🎯 Test
         run: make test
+
+      - name: 📦 Package
+        run: .github/workflows/release_prep.sh ${{ env.GITHUB_REF_NAME }} > release_notes.txt
+
+      - name: 🚚 Release
+        uses: softprops/action-gh-release@v1
+        with:
+          # Use GH feature to populate the changelog automatically
+          generate_release_notes: true
+          body_path: release_notes.txt
+          files: rules_mypy-*.tar.gz
+          fail_on_unmatched_files: true
