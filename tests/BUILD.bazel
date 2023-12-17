@@ -25,15 +25,35 @@ py_binary(
     ],
 )
 
+py_binary(
+    name = "proto_passes",
+    srcs = ["proto_passes.py"],
+    deps = [
+        requirement("protobuf"),
+        "//tests/proto/example/v1",
+    ],
+)
+
+py_binary(
+    name = "proto_fails",
+    srcs = ["proto_fails.py"],
+    deps = [
+        "//tests/proto/example/v1",
+    ],
+)
+
 py_library(
     name = "tests",
     srcs = [
         "google_passes.py",
         "pandas_fails.py",
         "pandas_passes.py",
+        "proto_fails.py",
+        "proto_passes.py",
     ],
     visibility = ["//:__subpackages__"],
     deps = [
+        "//tests/proto/example/v1",
         "@pip_pandas//:pkg",
         "@pip_protobuf//:pkg",
     ],
