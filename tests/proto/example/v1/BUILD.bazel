@@ -1,7 +1,7 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@rules_proto_grpc//buf:defs.bzl", "buf_proto_lint_test")
 load("@rules_python//python:defs.bzl", "py_library")
-load("//rules/proto:proto.bzl", "python_grpc_compile")
+load("//rules/proto:proto.bzl", "py_grpc_compile")
 
 proto_library(
     name = "proto",
@@ -13,8 +13,8 @@ proto_library(
     ],
 )
 
-python_grpc_compile(
-    name = "proto_python_grpc_compile",
+py_grpc_compile(
+    name = "proto_py_grpc_compile",
     output_mode = "NO_PREFIX_FLAT",
     protos = ["proto"],
     visibility = ["//visibility:private"],
@@ -22,7 +22,7 @@ python_grpc_compile(
 
 py_library(
     name = "v1",
-    srcs = ["proto_python_grpc_compile"],
+    srcs = ["proto_py_grpc_compile"],
     visibility = ["//visibility:public"],
 )
 

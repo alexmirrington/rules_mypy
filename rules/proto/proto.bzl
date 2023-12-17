@@ -2,7 +2,7 @@
 
 load("@rules_proto_grpc//:defs.bzl", "ProtoPluginInfo", "proto_compile_attrs", "proto_compile_impl")
 
-python_proto_compile = rule(
+py_proto_compile = rule(
     implementation = proto_compile_impl,
     attrs = dict(
         proto_compile_attrs,
@@ -18,7 +18,7 @@ python_proto_compile = rule(
     toolchains = [str(Label("@rules_proto_grpc//protobuf:toolchain_type"))],
 )
 
-python_grpc_compile = rule(
+py_grpc_compile = rule(
     implementation = proto_compile_impl,
     attrs = dict(
         proto_compile_attrs,
