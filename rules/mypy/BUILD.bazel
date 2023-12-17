@@ -1,6 +1,6 @@
 load("@pip//:requirements.bzl", "all_requirements")
 load("@rules_python//python:defs.bzl", "py_binary")
-load("//rules/mypy:stubs.bzl", "mypy_stubs")
+load("//rules/mypy:stubs.bzl", "py_stubs")
 
 exports_files([
     "mypy.bash.tpl",
@@ -15,7 +15,7 @@ py_binary(
     deps = all_requirements,  # keep
 )
 
-mypy_stubs(
+py_stubs(
     name = "all_stubs",
     visibility = ["//visibility:public"],
     deps = all_requirements,  # keep

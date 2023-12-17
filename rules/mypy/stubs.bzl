@@ -1,4 +1,4 @@
-"mypy_stubs rule"
+"py_stubs rule"
 MyPyStubsInfo = provider(
     "TODO: docs",
     fields = {
@@ -35,7 +35,7 @@ def _extract_stub_deps(ctx, deps):
                     symlinks.append(new_file)
     return symlinks
 
-def _mypy_stubs_impl(ctx):
+def _py_stubs_impl(ctx):
     pyi_srcs = []
     for target in ctx.attr.srcs:
         pyi_srcs.extend(target.files.to_list())
@@ -60,8 +60,8 @@ def _mypy_stubs_impl(ctx):
         ),
     ]
 
-mypy_stubs = rule(
-    implementation = _mypy_stubs_impl,
+py_stubs = rule(
+    implementation = _py_stubs_impl,
     attrs = {
         "deps": attr.label_list(
             allow_empty = True,
