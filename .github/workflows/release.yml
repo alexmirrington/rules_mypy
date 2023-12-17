@@ -11,7 +11,7 @@ on:
 permissions: {}
 
 jobs:
-  build:
+  package:
     runs-on: ubuntu-latest
     steps:
       - name: 🛒 Checkout
@@ -41,7 +41,11 @@ jobs:
 
       - name: 📦 Package
         run: .github/workflows/release_prep.sh ${{ env.GITHUB_REF_NAME }} > release_notes.txt
-
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
       - name: 🚚 Release
         uses: softprops/action-gh-release@v1
         with:
