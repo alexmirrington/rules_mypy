@@ -65,34 +65,30 @@ def _is_external_src(src_file):
     return src_file.path.startswith("external/")
 
 def _extract_srcs(srcs):
-    """Include all .py and .pyi files, but .pyi files take precedence.
-
-    MyPy will error if we say to run over the same module with both its .py and .pyi files, so we
-    must be careful to only use the .pyi stub.
-    """
     direct_src_files = {}
     for src in srcs:
         for f in src.files.to_list():
-            if f.extension == "pyi":
-                # Remove the equivalent .py source if it was already registered
-                py_source_path = f.path[:-1]
-                if direct_src_files.get(py_source_path) != None:
-                    direct_src_files.pop(py_source_path)
-                direct_src_files[f.path] = f
-            elif f.extension == "py":
-                # Only add a .py file if an equivalent .pyi source is not already registered
-                pyi_source_path = f.path + "i"
-                if direct_src_files.get(pyi_source_path) == None:
-                    direct_src_files[f.path] = f
+            direct_src_files[f.path] = f
     return direct_src_files.values()
+
+def _extract_generated_stubs(deps):
+    file_map = {}
+    for dep in deps:
+        for f in dep.default_runfiles.files.to_list():
+            if f.extension == "pyi":
+                file_map[f.path] = f
+    return file_map.values()
 
 def _extract_transitive_deps(deps):
     transitive_deps = []
     for dep in deps:
-        # Transitive_sources are not defined for .pyi files in rules_python :pkg repository rules.
-        # This will only include .py sources so does not work for *-stubs packages
         if PyInfo in dep and not _is_external_dep(dep):
             transitive_deps.append(dep[PyInfo].transitive_sources)
+
+            # Extract any generated stub files from default runfiles for python deps,
+            # as they are not included in PyInfo transitive sources
+            generated_stub_deps = _extract_generated_stubs(deps)
+            transitive_deps.append(depset(direct = generated_stub_deps))
     return transitive_deps
 
 def _extract_imports(imports, label):
@@ -108,6 +104,27 @@ def _extract_imports(imports, label):
         else:
             mypypath_parts.append("{}/{}".format(label.package, import_))
     return mypypath_parts
+
+def _prioritize_stubs(files):
+    """Include all .py and .pyi files, in the given file list, but prioritizing .pyi files.
+
+    MyPy will error if we say to run over the same module with both its .py and .pyi files, so we
+    must be careful to only use the .pyi stub if it exists.
+    """
+    filtered_files = {}
+    for f in files:
+        if f.extension == "pyi":
+            # Remove the equivalent .py source if it was already registered
+            py_source_path = f.path[:-1]
+            if filtered_files.get(py_source_path) != None:
+                filtered_files.pop(py_source_path)
+            filtered_files[f.path] = f
+        elif f.extension == "py":
+            # Only add a .py file if an equivalent .pyi source is not already registered
+            pyi_source_path = f.path + "i"
+            if filtered_files.get(pyi_source_path) == None:
+                filtered_files[f.path] = f
+    return filtered_files.values()
 
 def _mypy_rule_impl(ctx, is_aspect = False):
     base_rule = ctx
@@ -132,6 +149,8 @@ def _mypy_rule_impl(ctx, is_aspect = False):
     final_srcs_depset = depset(transitive = transitive_srcs_depsets +
                                             [depset(direct = direct_src_files)])
     src_files = [f for f in final_srcs_depset.to_list() if not _is_external_src(f)]
+    src_files = _prioritize_stubs(src_files)
+
     if not src_files:
         return None
 
@@ -236,7 +255,7 @@ def _mypy_test_impl(ctx):
 
 mypy_aspect = aspect(
     implementation = _mypy_aspect_impl,
-    attr_aspects = ["deps"],
+    attr_aspects = [],
     attrs = DEFAULT_ATTRS,
 )
 

@@ -21,11 +21,9 @@ python_grpc_compile(
 )
 
 py_library(
-    name = "grpc_mypy",
+    name = "v1",
     srcs = ["proto_python_grpc_compile"],
-    deps = [
-        "@com_google_protobuf//:protobuf_python",
-    ],
+    visibility = ["//visibility:public"],
 )
 
 buf_proto_lint_test(

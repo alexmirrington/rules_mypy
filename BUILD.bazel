@@ -28,6 +28,7 @@ gazelle_python_manifest(
     use_pip_repository_aliases = False,
 )
 
+# gazelle:resolve py tests.proto.example.v1.example_pb2 //tests/proto/example/v1
 gazelle(
     name = "gazelle",
     data = GAZELLE_PYTHON_RUNTIME_DEPS,
