@@ -3,9 +3,11 @@ workspace(name = "rules_mypy")
 # --------------------
 # Set up internal deps
 # --------------------
-load("//:repositories.bzl", "install_internal_deps")
+load("//:repositories.bzl", "install_deps", "install_dev_deps")
 
-install_internal_deps()
+install_deps()
+
+install_dev_deps()
 
 # --------------------
 # Set up external deps

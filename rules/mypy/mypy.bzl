@@ -22,15 +22,19 @@ MYPY_DEBUG = False
 VALID_EXTENSIONS = ["py", "pyi"]
 
 DEFAULT_ATTRS = {
+    # TODO(alexmirrington): Ensure that mypy is installed
     "_mypy_cli": attr.label(
         default = Label("//rules/mypy:__main__"),
         executable = True,
         cfg = "exec",
     ),
+    # TODO(alexmirrington): Expose via repository rule config, e.g. https://github.com/bazel-contrib/bazel-mypy-integration/blob/main/config.bzl
     "_mypy_config": attr.label(
         default = Label("//:.mypy.ini"),
         allow_single_file = True,
     ),
+    # TODO(alexmirrington): Expose via repository rule config, to pass in all_requirements
+    # for whatever workspace uses these rules
     "_stubs": attr.label(
         default = Label("//rules/mypy:all_stubs"),
         executable = False,
