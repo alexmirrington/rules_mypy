@@ -5,7 +5,7 @@
 
 manifest:
   modules_mapping:
-    ced4bbd844d3a34b6fc2__mypyc: mypy
+    6c7190bc8b55ffe67f57__mypyc: mypy
     dateutil: python_dateutil
     dateutil.easter: python_dateutil
     dateutil.parser: python_dateutil
@@ -189,6 +189,7 @@ manifest:
     mypy.plugins.default: mypy
     mypy.plugins.enums: mypy
     mypy.plugins.functools: mypy
+    mypy.plugins.proper_plugin: mypy
     mypy.plugins.singledispatch: mypy
     mypy.pyinfo: mypy
     mypy.reachability: mypy
@@ -237,6 +238,7 @@ manifest:
     mypy.test.data: mypy
     mypy.test.helpers: mypy
     mypy.test.meta: mypy
+    mypy.test.meta.test_diff_helper: mypy
     mypy.test.meta.test_parse_data: mypy
     mypy.test.meta.test_update_data: mypy
     mypy.test.test_find_sources: mypy
@@ -2156,4 +2158,4 @@ manifest:
     tzdata.zoneinfo.US: tzdata
   pip_repository:
     name: pip
-integrity: a4653757a8275690d46b512fee508c97fa95f03f122e9eeaa14b3415daa200fe
+integrity: bd1fbe3cf50b009c8dad1ed4e0ae154a9ad12bfccb5d69486d5a9199c4e05cae
