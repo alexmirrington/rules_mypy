@@ -1,5 +1,5 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
-load("@pip//:requirements.bzl", "all_whl_requirements")
+load("@pip//:requirements.bzl", "all_whl_requirements", "requirement")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("@rules_python_gazelle_plugin//:def.bzl", "GAZELLE_PYTHON_RUNTIME_DEPS")
 load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
@@ -8,6 +8,20 @@ load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
 exports_files([
     ".mypy.ini",
 ])
+
+# Allow mypy config to be overridden by end user.
+label_flag(
+    name = "mypy_config",
+    build_setting_default = "//:.mypy.ini",
+    visibility = ["//visibility:public"],
+)
+
+# Allow mypy requirement to be overridden by end user.
+label_flag(
+    name = "mypy",
+    build_setting_default = requirement("mypy"),
+    visibility = ["//visibility:public"],
+)
 
 compile_pip_requirements(
     name = "requirements",

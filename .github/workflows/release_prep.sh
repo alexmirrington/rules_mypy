@@ -22,5 +22,18 @@ http_archive(
     strip_prefix = "${PREFIX}",
     url = "https://github.com/alexmirrington/rules_mypy/releases/download/${TAG}/${ARCHIVE}",
 )
+
+load("@com_alexmirrington_rules_mypy//:repositories.bzl", "rules_mypy_repos")
+
+rules_mypy_repos()
+\`\`\`
+
+BUILD snippet:
+\`\`\`starlark
+\`\`\`
+
+Example command:
+\`\`\`shell
+bazel build --@com_alexmirrington_rules_mypy//:mypy=//:mypy --aspects //rules/mypy:mypy.bzl%mypy_aspect --output_groups=mypy ...
 \`\`\`
 EOF
