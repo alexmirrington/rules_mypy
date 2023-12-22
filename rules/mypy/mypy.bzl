@@ -30,7 +30,7 @@ DEFAULT_ATTRS = {
     ),
     # TODO(alexmirrington): Expose via repository rule config, e.g. https://github.com/bazel-contrib/bazel-mypy-integration/blob/main/config.bzl
     "_mypy_config": attr.label(
-        default = Label("//:.mypy.ini"),
+        default = Label("//:mypy_config"),
         allow_single_file = True,
     ),
     # TODO(alexmirrington): Expose via repository rule config, to pass in all_requirements
