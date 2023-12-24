@@ -3,13 +3,13 @@ load("@rules_proto_grpc//:defs.bzl", "proto_plugin")
 proto_plugin(
     name = "proto_mypy_plugin",
     outputs = ["{protopath|python}_pb2.pyi"],
-    tool = "@pip_mypy_protobuf//:rules_python_wheel_entry_point_protoc-gen-mypy",
+    tool = "@rules_mypy_pip_deps_mypy_protobuf//:rules_python_wheel_entry_point_protoc-gen-mypy",
     visibility = ["//visibility:public"],
 )
 
 proto_plugin(
     name = "grpc_mypy_plugin",
     outputs = ["{protopath|python}_pb2_grpc.pyi"],
-    tool = "@pip_mypy_protobuf//:rules_python_wheel_entry_point_protoc-gen-mypy_grpc",
+    tool = "@rules_mypy_pip_deps_mypy_protobuf//:rules_python_wheel_entry_point_protoc-gen-mypy_grpc",
     visibility = ["//visibility:public"],
 )

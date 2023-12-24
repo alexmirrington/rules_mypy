@@ -2157,5 +2157,5 @@ manifest:
     tzdata.zoneinfo.Pacific: tzdata
     tzdata.zoneinfo.US: tzdata
   pip_repository:
-    name: pip
-integrity: bd1fbe3cf50b009c8dad1ed4e0ae154a9ad12bfccb5d69486d5a9199c4e05cae
+    name: rules_mypy_pip_deps
+integrity: 364b7d94623265e32707a3ddd11b97be148a3596986a1bb5fcde5b937a97d839

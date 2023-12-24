@@ -1,5 +1,5 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
-load("@pip//:requirements.bzl", "all_whl_requirements", "requirement")
+load("@rules_mypy_pip_deps//:requirements.bzl", "all_whl_requirements", "requirement")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("@rules_python_gazelle_plugin//:def.bzl", "GAZELLE_PYTHON_RUNTIME_DEPS")
 load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
@@ -37,7 +37,7 @@ modules_mapping(
 gazelle_python_manifest(
     name = "gazelle_python_manifest",
     modules_mapping = ":modules_map",
-    pip_repository_name = "pip",
+    pip_repository_name = "rules_mypy_pip_deps",
     requirements = "//:requirements_lock.txt",
     use_pip_repository_aliases = False,
 )

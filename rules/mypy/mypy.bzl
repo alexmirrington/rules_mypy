@@ -5,6 +5,7 @@ Initial source taken from here: https://github.com/bazel-contrib/bazel-mypy-inte
 
 load("@bazel_skylib//lib:sets.bzl", "sets")
 load("@bazel_skylib//lib:shell.bzl", "shell")
+load("//rules/mypy:stubs.bzl", "PyStubsInfo")
 
 MyPyAspectInfo = provider(
     "TODO: documentation",
@@ -22,21 +23,17 @@ MYPY_DEBUG = False
 VALID_EXTENSIONS = ["py", "pyi"]
 
 DEFAULT_ATTRS = {
-    # TODO(alexmirrington): Ensure that mypy is installed
     "_mypy_cli": attr.label(
         default = Label("//rules/mypy:__main__"),
         executable = True,
         cfg = "exec",
     ),
-    # TODO(alexmirrington): Expose via repository rule config, e.g. https://github.com/bazel-contrib/bazel-mypy-integration/blob/main/config.bzl
     "_mypy_config": attr.label(
-        default = Label("//:mypy_config"),
+        default = Label("//config:mypy_config"),
         allow_single_file = True,
     ),
-    # TODO(alexmirrington): Expose via repository rule config, to pass in all_requirements
-    # for whatever workspace uses these rules
     "_stubs": attr.label(
-        default = Label("//rules/mypy:all_stubs"),
+        default = Label("//rules/mypy:stubs"),
         executable = False,
     ),
     "_template": attr.label(
@@ -136,10 +133,10 @@ def _mypy_rule_impl(ctx, is_aspect = False):
         base_rule = ctx.rule
 
     mypy_config_file = ctx.file._mypy_config
+    mypypath_parts = [ctx.attr._stubs[PyStubsInfo].stubs_directory]
 
-    # TODO(alexmirrington): Cleanup or pass through on pyinfo imports
-    mypypath_parts = ["/".join([ctx.bin_dir.path, ctx.attr._stubs.label.package, "stubs"])]
     direct_src_files = []
+
     transitive_srcs_depsets = []
     if hasattr(base_rule.attr, "srcs"):
         direct_src_files = _extract_srcs(base_rule.attr.srcs)

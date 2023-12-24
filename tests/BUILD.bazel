@@ -1,4 +1,4 @@
-load("@pip//:requirements.bzl", "requirement")
+load("@rules_mypy_pip_deps//:requirements.bzl", "requirement")
 load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 
 py_binary(
@@ -54,7 +54,7 @@ py_library(
     visibility = ["//:__subpackages__"],
     deps = [
         "//tests/proto/example/v1",
-        "@pip_pandas//:pkg",
-        "@pip_protobuf//:pkg",
+        "@rules_mypy_pip_deps_pandas//:pkg",
+        "@rules_mypy_pip_deps_protobuf//:pkg",
     ],
 )
