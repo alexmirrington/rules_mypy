@@ -26,14 +26,43 @@ http_archive(
 load("@com_alexmirrington_rules_mypy//:repositories.bzl", "rules_mypy_repos")
 
 rules_mypy_repos()
+
+load("@rules_python//python:repositories.bzl", "python_register_toolchains")
+
+python_register_toolchains(
+    name = "python_3_11",
+    python_version = "3.11",
+)
+
+load("@python_3_11//:defs.bzl", "interpreter")
+
+load("@com_alexmirrington_rules_mypy//:pip.bzl", "rules_mypy_py_deps")
+rules_mypy_py_deps(
+    python_interpreter_target = interpreter,
+    requirements_lock = "//:requirements_lock.txt",
+)
+
+load("@rules_mypy_pip_deps//:requirements.bzl", install_rules_mypy_pip_deps = "install_deps")
+
+install_rules_mypy_pip_deps()
+
 \`\`\`
 
 BUILD snippet:
 \`\`\`starlark
+exports_files([
+    ".mypy.ini",
+])
+
+alias(
+    name = "mypy_config",
+    actual = "//:.mypy.ini",
+    visibility = ["//visibility:public"],
+)
 \`\`\`
 
 Example command:
 \`\`\`shell
-bazel build --@com_alexmirrington_rules_mypy//:mypy=//:mypy --aspects //rules/mypy:mypy.bzl%mypy_aspect --output_groups=mypy ...
+bazel build --@com_alexmirrington_rules_mypy//config:mypy_config=//:.mypy.ini --aspects @com_alexmirrington_rules_mypy//rules/mypy:mypy.bzl%mypy_aspect --output_groups=mypy ...
 \`\`\`
 EOF

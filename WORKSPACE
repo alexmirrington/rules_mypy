@@ -70,14 +70,14 @@ python_register_toolchains(
 )
 
 load("@python_3_11//:defs.bzl", "interpreter")
-load("@rules_python//python:pip.bzl", "pip_parse")
+load("//:pip.bzl", "rules_mypy_py_deps")
 
-pip_parse(
-    name = "pip",
+rules_mypy_py_deps(
     python_interpreter_target = interpreter,
     requirements_lock = "//:requirements_lock.txt",
 )
 
-load("@pip//:requirements.bzl", install_pip_deps = "install_deps")
+# TODO(alexmirrington): Move into above macro
+load("@rules_mypy_pip_deps//:requirements.bzl", install_pip_deps = "install_deps")
 
 install_pip_deps()

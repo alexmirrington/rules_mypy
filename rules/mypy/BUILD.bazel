@@ -1,4 +1,4 @@
-load("@pip//:requirements.bzl", "all_requirements")
+load("@rules_mypy_pip_deps//:requirements.bzl", "all_requirements")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//rules/mypy:stubs.bzl", "py_stubs")
 
@@ -12,11 +12,12 @@ py_binary(
     srcs = ["__main__.py"],
     main = "__main__.py",
     visibility = ["//visibility:public"],
-    deps = ["//:mypy"],  # keep
+    deps = ["//config:mypy"],  # keep
 )
 
+# Make PEP-561 stubs-only packages available for type-checking.
 py_stubs(
-    name = "all_stubs",
+    name = "stubs",
     visibility = ["//visibility:public"],
     deps = all_requirements,  # keep
 )
