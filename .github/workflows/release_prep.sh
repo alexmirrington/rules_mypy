@@ -53,12 +53,6 @@ BUILD snippet:
 exports_files([
     ".mypy.ini",
 ])
-
-alias(
-    name = "mypy_config",
-    actual = "//:.mypy.ini",
-    visibility = ["//visibility:public"],
-)
 \`\`\`
 
 Example command:
