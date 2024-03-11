@@ -8,7 +8,8 @@ fix:
 
 .PHONY: repin
 repin:
-	bazel run //:requirements.update
+	bazel run //:requirements_3_11.update
+	bazel run //:requirements_3_10.update
 	bazel run //:gazelle_python_manifest.update
 
 .PHONY: generate
@@ -27,3 +28,15 @@ test:
 .PHONY: build-mypy
 build-mypy:
 	bazel build --aspects //rules/mypy:mypy.bzl%mypy_aspect --output_groups=mypy ...
+
+.PHONY: run
+run:
+	bazel run //tests:print_python_version
+
+.PHONY: run_3_10
+run_3_10:
+	bazel run //tests:print_python_version --@rules_python//python/config_settings:python_version="3.10"
+
+.PHONY: run_3_11
+run_3_11:
+	bazel run //tests:print_python_version --@rules_python//python/config_settings:python_version="3.11"

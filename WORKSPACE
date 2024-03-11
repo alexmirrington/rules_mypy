@@ -13,9 +13,13 @@ rules_mypy_internal_repos()
 # Set up external deps
 # --------------------
 # rules_python
-load("@rules_python//python:repositories.bzl", "python_register_toolchains", _rules_python_repositories = "py_repositories")
+load("@rules_python//python:repositories.bzl", "python_register_multi_toolchains", _rules_python_repositories = "py_repositories")
 
 _rules_python_repositories()
+
+load("@rules_python//python/pip_install:repositories.bzl", "pip_install_dependencies")
+
+pip_install_dependencies()
 
 # gazelle
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
@@ -63,10 +67,18 @@ grpc_deps()
 # ---------------
 # Toolchain setup
 # ---------------
-# Set up python toolchain
-python_register_toolchains(
-    name = "python_3_11",
-    python_version = "3.11",
+# Set up python toolchains
+_PYTHON_VERSIONS = [
+    "3.11",
+    "3.10",
+]
+
+_DEFAULT_PYTHON_VERSION = _PYTHON_VERSIONS[0]
+
+python_register_multi_toolchains(
+    name = "python",
+    default_version = _DEFAULT_PYTHON_VERSION,
+    python_versions = _PYTHON_VERSIONS,
 )
 
 load("@python_3_11//:defs.bzl", "interpreter")
@@ -75,6 +87,23 @@ load("//:pip.bzl", "rules_mypy_py_deps")
 rules_mypy_py_deps(
     python_interpreter_target = interpreter,
     requirements_lock = "//:requirements_lock.txt",
+)
+
+load("@python//:pip.bzl", "multi_pip_parse")
+load("@python//3.10:defs.bzl", interpreter_3_10 = "interpreter")
+load("@python//3.11:defs.bzl", interpreter_3_11 = "interpreter")
+
+multi_pip_parse(
+    name = "pip",
+    default_version = _DEFAULT_PYTHON_VERSION,
+    python_interpreter_target = {
+        "3.10": interpreter_3_10,
+        "3.11": interpreter_3_11,
+    },
+    requirements_lock = {
+        "3.10": "//:requirements_lock_3_10.txt",
+        "3.11": "//:requirements_lock_3_11.txt",
+    },
 )
 
 # TODO(alexmirrington): Move into above macro

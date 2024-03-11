@@ -1,6 +1,10 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
 load("@rules_mypy_pip_deps//:requirements.bzl", "all_whl_requirements", "requirement")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+load("@pip_3_10//:requirements.bzl", all_whl_requirements_3_10 = "all_whl_requirements")
+load("@pip_3_11//:requirements.bzl", all_whl_requirements_3_11 = "all_whl_requirements")
+load("@python//3.10:defs.bzl", compile_pip_requirements_3_10 = "compile_pip_requirements")
+load("@python//3.11:defs.bzl", compile_pip_requirements_3_11 = "compile_pip_requirements")
 load("@rules_python_gazelle_plugin//:def.bzl", "GAZELLE_PYTHON_RUNTIME_DEPS")
 load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
 load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
@@ -23,15 +27,21 @@ label_flag(
     visibility = ["//visibility:public"],
 )
 
-compile_pip_requirements(
-    name = "requirements",
+compile_pip_requirements_3_11(
+    name = "requirements_3_11",
     requirements_in = "requirements.txt",
-    requirements_txt = "requirements_lock.txt",
+    requirements_txt = "requirements_lock_3_11.txt",
+)
+
+compile_pip_requirements_3_10(
+    name = "requirements_3_10",
+    requirements_in = "requirements.txt",
+    requirements_txt = "requirements_lock_3_10.txt",
 )
 
 modules_mapping(
     name = "modules_map",
-    wheels = all_whl_requirements,
+    wheels = all_whl_requirements_3_11 + all_whl_requirements_3_10,
 )
 
 gazelle_python_manifest(

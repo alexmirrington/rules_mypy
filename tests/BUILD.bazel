@@ -42,6 +42,11 @@ py_binary(
     ],
 )
 
+py_binary(
+    name = "print_python_version",
+    srcs = ["print_python_version.py"],
+)
+
 py_library(
     name = "tests",
     srcs = [
@@ -50,6 +55,7 @@ py_library(
         "pandas_passes.py",
         "proto_fails.py",
         "proto_passes.py",
+        "print_python_version.py",
     ],
     visibility = ["//:__subpackages__"],
     deps = [

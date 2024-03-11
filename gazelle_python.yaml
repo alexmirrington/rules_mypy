@@ -84,6 +84,7 @@ manifest:
     google.protobuf.source_context_pb2: protobuf
     google.protobuf.struct_pb2: protobuf
     google.protobuf.symbol_database: protobuf
+    google.protobuf.testdata: protobuf
     google.protobuf.text_encoding: protobuf
     google.protobuf.text_format: protobuf
     google.protobuf.timestamp_pb2: protobuf
@@ -429,7 +430,6 @@ manifest:
     numpy.core.einsumfunc: numpy
     numpy.core.fromnumeric: numpy
     numpy.core.function_base: numpy
-    numpy.core.generate_numpy_api: numpy
     numpy.core.getlimits: numpy
     numpy.core.memmap: numpy
     numpy.core.multiarray: numpy
@@ -437,8 +437,6 @@ manifest:
     numpy.core.numerictypes: numpy
     numpy.core.overrides: numpy
     numpy.core.records: numpy
-    numpy.core.setup: numpy
-    numpy.core.setup_common: numpy
     numpy.core.shape_base: numpy
     numpy.core.tests: numpy
     numpy.core.tests.examples.cython.setup: numpy
@@ -484,6 +482,7 @@ manifest:
     numpy.core.tests.test_nep50_promotions: numpy
     numpy.core.tests.test_numeric: numpy
     numpy.core.tests.test_numerictypes: numpy
+    numpy.core.tests.test_numpy_2_0_compat: numpy
     numpy.core.tests.test_overrides: numpy
     numpy.core.tests.test_print: numpy
     numpy.core.tests.test_protocols: numpy
@@ -615,13 +614,16 @@ manifest:
     numpy.f2py.tests.test_common: numpy
     numpy.f2py.tests.test_compile_function: numpy
     numpy.f2py.tests.test_crackfortran: numpy
+    numpy.f2py.tests.test_data: numpy
     numpy.f2py.tests.test_docs: numpy
     numpy.f2py.tests.test_f2cmap: numpy
     numpy.f2py.tests.test_f2py2e: numpy
+    numpy.f2py.tests.test_isoc: numpy
     numpy.f2py.tests.test_kind: numpy
     numpy.f2py.tests.test_mixed: numpy
     numpy.f2py.tests.test_module_doc: numpy
     numpy.f2py.tests.test_parameter: numpy
+    numpy.f2py.tests.test_pyf_src: numpy
     numpy.f2py.tests.test_quoted_character: numpy
     numpy.f2py.tests.test_regression: numpy
     numpy.f2py.tests.test_return_character: numpy
@@ -638,7 +640,6 @@ manifest:
     numpy.f2py.use_rules: numpy
     numpy.fft: numpy
     numpy.fft.helper: numpy
-    numpy.fft.setup: numpy
     numpy.fft.tests: numpy
     numpy.fft.tests.test_helper: numpy
     numpy.fft.tests.test_pocketfft: numpy
@@ -693,7 +694,6 @@ manifest:
     numpy.linalg: numpy
     numpy.linalg.lapack_lite: numpy
     numpy.linalg.linalg: numpy
-    numpy.linalg.setup: numpy
     numpy.linalg.tests: numpy
     numpy.linalg.tests.test_deprecations: numpy
     numpy.linalg.tests.test_linalg: numpy
@@ -748,7 +748,6 @@ manifest:
     numpy.random: numpy
     numpy.random.bit_generator: numpy
     numpy.random.mtrand: numpy
-    numpy.random.setup: numpy
     numpy.random.tests: numpy
     numpy.random.tests.data: numpy
     numpy.random.tests.test_direct: numpy
@@ -761,7 +760,6 @@ manifest:
     numpy.random.tests.test_regression: numpy
     numpy.random.tests.test_seed_sequence: numpy
     numpy.random.tests.test_smoke: numpy
-    numpy.setup: numpy
     numpy.testing: numpy
     numpy.testing.overrides: numpy
     numpy.testing.print_coercion_tables: numpy
@@ -2133,6 +2131,7 @@ manifest:
     pytz.tzfile: pytz
     pytz.tzinfo: pytz
     six: six
+    tomli: tomli
     typing_extensions: typing_extensions
     tzdata: tzdata
     tzdata.zoneinfo: tzdata
@@ -2157,5 +2156,5 @@ manifest:
     tzdata.zoneinfo.Pacific: tzdata
     tzdata.zoneinfo.US: tzdata
   pip_repository:
-    name: rules_mypy_pip_deps
-integrity: 364b7d94623265e32707a3ddd11b97be148a3596986a1bb5fcde5b937a97d839
+    name: pip
+integrity: 1c1d24d3186b2a28b11825eb83b6a394ccff6cd0b3d0e770c9deca240ea7e296
