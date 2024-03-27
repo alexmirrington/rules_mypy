@@ -19,5 +19,5 @@ py_binary(
 py_stubs(
     name = "stubs",
     visibility = ["//visibility:public"],
-    deps = all_requirements,  # keep
+    deps = all_whl_requirements,  # keep
 )
