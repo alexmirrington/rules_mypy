@@ -8,9 +8,9 @@ def rules_mypy_repos():
     maybe(
         http_archive,
         name = "rules_python",
-        sha256 = "c68bdc4fbec25de5b5493b8819cfc877c4ea299c0dcb15c244c5a00208cde311",
-        strip_prefix = "rules_python-0.31.0",
-        url = "https://github.com/bazelbuild/rules_python/releases/download/0.31.0/rules_python-0.31.0.tar.gz",
+        sha256 = "3b8b4cdc991bc9def8833d118e4c850f1b7498b3d65d5698eea92c3528b8cf2c",
+        strip_prefix = "rules_python-0.30.0",
+        url = "https://github.com/bazelbuild/rules_python/releases/download/0.30.0/rules_python-0.30.0.tar.gz",
     )
 
     maybe(
@@ -21,6 +21,14 @@ def rules_mypy_repos():
             "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.5.0/bazel-skylib-1.5.0.tar.gz",
             "https://github.com/bazelbuild/bazel-skylib/releases/download/1.5.0/bazel-skylib-1.5.0.tar.gz",
         ],
+    )
+
+    maybe(
+        http_archive,
+        name = "rules_pyvenv",
+        sha256 = "3a3cc6e211850178de02b618d301f3f39d1a9cddb54d499d816ff9ea835a2834",
+        strip_prefix = "rules_pyvenv-1.2",
+        url = "https://github.com/cedarai/rules_pyvenv/archive/refs/tags/v1.2.tar.gz",
     )
 
 def rules_mypy_internal_repos():
@@ -45,9 +53,9 @@ def rules_mypy_internal_repos():
 
     http_archive(
         name = "rules_python_gazelle_plugin",
-        sha256 = "5868e73107a8e85d8f323806e60cad7283f34b32163ea6ff1020cf27abef6036",
-        strip_prefix = "rules_python-0.25.0/gazelle",
-        url = "https://github.com/bazelbuild/rules_python/releases/download/0.25.0/rules_python-0.25.0.tar.gz",
+        sha256 = "3b8b4cdc991bc9def8833d118e4c850f1b7498b3d65d5698eea92c3528b8cf2c",
+        strip_prefix = "rules_python-0.30.0/gazelle",
+        url = "https://github.com/bazelbuild/rules_python/releases/download/0.30.0/rules_python-0.30.0.tar.gz",
     )
 
     http_archive(
@@ -55,4 +63,11 @@ def rules_mypy_internal_repos():
         sha256 = "2a0860a336ae836b54671cbbe0710eec17c64ef70c4c5a88ccfd47ea6e3739bd",
         strip_prefix = "rules_proto_grpc-4.6.0",
         urls = ["https://github.com/rules-proto-grpc/rules_proto_grpc/releases/download/4.6.0/rules_proto_grpc-4.6.0.tar.gz"],
+    )
+
+    http_archive(
+        name = "rules_pyvenv",
+        sha256 = "3a3cc6e211850178de02b618d301f3f39d1a9cddb54d499d816ff9ea835a2834",
+        strip_prefix = "rules_pyvenv-1.2",
+        url = "https://github.com/cedarai/rules_pyvenv/archive/refs/tags/v1.2.tar.gz",
     )

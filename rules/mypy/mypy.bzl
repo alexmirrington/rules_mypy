@@ -5,7 +5,7 @@ Initial source taken from here: https://github.com/bazel-contrib/bazel-mypy-inte
 
 load("@bazel_skylib//lib:sets.bzl", "sets")
 load("@bazel_skylib//lib:shell.bzl", "shell")
-load("//rules/mypy:stubs.bzl", "PyStubsInfo")
+load("//rules/venv:venv.bzl", "PyVenvInfo")
 
 MyPyAspectInfo = provider(
     "TODO: documentation",
@@ -23,22 +23,17 @@ MYPY_DEBUG = False
 VALID_EXTENSIONS = ["py", "pyi"]
 
 DEFAULT_ATTRS = {
-    "_mypy_cli": attr.label(
-        default = Label("//rules/mypy:__main__"),
-        executable = True,
-        cfg = "exec",
-    ),
     "_mypy_config": attr.label(
         default = Label("//config:mypy_config"),
         allow_single_file = True,
     ),
-    "_stubs": attr.label(
-        default = Label("//rules/mypy:stubs"),
-        executable = False,
-    ),
     "_template": attr.label(
         default = Label("//rules/mypy:mypy.bash.tpl"),
         allow_single_file = True,
+    ),
+    "_venv": attr.label(
+        default = Label("//rules/mypy:venv"),
+        executable = False,
     ),
 }
 
@@ -133,8 +128,8 @@ def _mypy_rule_impl(ctx, is_aspect = False):
         base_rule = ctx.rule
 
     mypy_config_file = ctx.file._mypy_config
-    mypypath_parts = [ctx.attr._stubs[PyStubsInfo].stubs_directory]
 
+    mypypath_parts = []
     direct_src_files = []
 
     transitive_srcs_depsets = []
@@ -178,10 +173,8 @@ def _mypy_rule_impl(ctx, is_aspect = False):
     # the project version of mypy however, other rules should fall back on their
     # relative runfiles.
     runfiles = ctx.runfiles(
-        files = src_files + ctx.attr._stubs[PyInfo].transitive_sources.to_list() + [mypy_config_file],
+        files = src_files + [ctx.attr._venv[PyVenvInfo].venv_dir] + [mypy_config_file],
     )
-    if not is_aspect:
-        runfiles = runfiles.merge(ctx.attr._mypy_cli.default_runfiles)
 
     src_root_paths = sets.to_list(
         sets.make([f.root.path for f in src_files]),
@@ -193,14 +186,13 @@ def _mypy_rule_impl(ctx, is_aspect = False):
         substitutions = {
             "{CACHE_MAP_TRIPLES}": " ".join(_sources_to_cache_map_triples(src_files, is_aspect)),
             "{MYPYPATH_PATH}": mypypath if mypypath else "",
-            "{MYPY_EXE}": ctx.executable._mypy_cli.path,
             "{MYPY_INI_PATH}": mypy_config_file.path,
-            "{MYPY_ROOT}": ctx.executable._mypy_cli.root.path,
             "{OUTPUT}": out.path if out else "",
             "{PACKAGE_ROOTS}": " ".join([
                 "--package-root " + shell.quote(path or ".")
                 for path in src_root_paths
             ]),
+            "{PY_INTERPRETER}": "%s/bin/python3" % ctx.attr._venv[PyVenvInfo].venv_dir.path,
             "{SRCS}": " ".join([
                 shell.quote(f.path) if is_aspect else shell.quote(f.short_path)
                 for f in src_files
@@ -236,7 +228,7 @@ def _mypy_aspect_impl(_, ctx):
     ctx.actions.run(
         outputs = [aspect_info.out],
         inputs = info.default_runfiles.files,
-        tools = [ctx.executable._mypy_cli],
+        tools = [],
         executable = aspect_info.exe,
         mnemonic = "MyPy",
         progress_message = "Type-checking %s" % ctx.label,

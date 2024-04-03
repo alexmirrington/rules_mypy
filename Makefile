@@ -11,6 +11,10 @@ repin:
 	bazel run //:requirements.update
 	bazel run //:gazelle_python_manifest.update
 
+.PHONY: venv
+venv:
+	bazel run //:venv
+
 .PHONY: generate
 generate:
 	bazel run //:gazelle
