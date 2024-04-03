@@ -1,9 +1,10 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
-load("@rules_mypy_pip_deps//:requirements.bzl", "all_whl_requirements", "requirement")
+load("@rules_mypy_pip_deps//:requirements.bzl", "all_requirements", "all_whl_requirements", "requirement")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("@rules_python_gazelle_plugin//:def.bzl", "GAZELLE_PYTHON_RUNTIME_DEPS")
 load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
 load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
+load("@rules_pyvenv//:venv.bzl", "py_venv")
 
 exports_files([
     ".mypy.ini",
@@ -39,7 +40,6 @@ gazelle_python_manifest(
     modules_mapping = ":modules_map",
     pip_repository_name = "rules_mypy_pip_deps",
     requirements = "//:requirements_lock.txt",
-    use_pip_repository_aliases = False,
 )
 
 # gazelle:resolve py tests.proto.example.v1.example_pb2 //tests/proto/example/v1
@@ -47,4 +47,10 @@ gazelle(
     name = "gazelle",
     data = GAZELLE_PYTHON_RUNTIME_DEPS,
     gazelle = "@rules_python_gazelle_plugin//python:gazelle_binary",
+)
+
+py_venv(
+    name = "venv",
+    venv_location = ".venv",
+    deps = all_requirements,
 )

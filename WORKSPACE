@@ -77,7 +77,6 @@ rules_mypy_py_deps(
     requirements_lock = "//:requirements_lock.txt",
 )
 
-# TODO(alexmirrington): Move into above macro
 load("@rules_mypy_pip_deps//:requirements.bzl", install_pip_deps = "install_deps")
 
 install_pip_deps()

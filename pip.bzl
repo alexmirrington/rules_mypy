@@ -20,5 +20,3 @@ def rules_mypy_py_deps(requirements_lock, python_interpreter_target):
             python_interpreter_target = python_interpreter_target,
             requirements_lock = requirements_lock,
         )
-
-        # install_pip_deps()

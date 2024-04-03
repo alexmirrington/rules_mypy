@@ -1,42 +1,46 @@
-load("@rules_mypy_pip_deps//:requirements.bzl", "requirement")
 load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 
 py_binary(
     name = "pandas_passes",
     srcs = ["pandas_passes.py"],
+    visibility = ["//:__subpackages__"],
     deps = [
-        requirement("pandas"),
+        "@rules_mypy_pip_deps//pandas",
     ],
 )
 
 py_binary(
     name = "pandas_fails",
     srcs = ["pandas_fails.py"],
+    visibility = ["//:__subpackages__"],
     deps = [
-        requirement("pandas"),
+        "@rules_mypy_pip_deps//pandas",
     ],
 )
 
 py_binary(
     name = "google_passes",
     srcs = ["google_passes.py"],
+    visibility = ["//:__subpackages__"],
     deps = [
-        requirement("protobuf"),
+        "@rules_mypy_pip_deps//protobuf",
     ],
 )
 
 py_binary(
     name = "proto_passes",
     srcs = ["proto_passes.py"],
+    visibility = ["//:__subpackages__"],
     deps = [
-        requirement("protobuf"),
         "//tests/proto/example/v1",
+        "@rules_mypy_pip_deps//protobuf",
     ],
 )
 
 py_binary(
     name = "proto_fails",
     srcs = ["proto_fails.py"],
+    visibility = ["//:__subpackages__"],
     deps = [
         "//tests/proto/example/v1",
     ],
@@ -54,7 +58,7 @@ py_library(
     visibility = ["//:__subpackages__"],
     deps = [
         "//tests/proto/example/v1",
-        "@rules_mypy_pip_deps_pandas//:pkg",
-        "@rules_mypy_pip_deps_protobuf//:pkg",
+        "@rules_mypy_pip_deps//pandas",
+        "@rules_mypy_pip_deps//protobuf",
     ],
 )

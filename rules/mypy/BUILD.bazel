@@ -1,23 +1,12 @@
 load("@rules_mypy_pip_deps//:requirements.bzl", "all_requirements")
-load("@rules_python//python:defs.bzl", "py_binary")
-load("//rules/mypy:stubs.bzl", "py_stubs")
+load("//rules/venv:venv.bzl", "py_venv")
 
 exports_files([
     "mypy.bash.tpl",
-    "__main__.py",
 ])
 
-py_binary(
-    name = "__main__",
-    srcs = ["__main__.py"],
-    main = "__main__.py",
-    visibility = ["//visibility:public"],
-    deps = ["//config:mypy"],  # keep
-)
-
-# Make PEP-561 stubs-only packages available for type-checking.
-py_stubs(
-    name = "stubs",
+py_venv(
+    name = "venv",
     visibility = ["//visibility:public"],
     deps = all_requirements,  # keep
 )
