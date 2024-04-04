@@ -14,15 +14,11 @@ and packaging, as well as `rules_python_gazelle_plugin` for build file generatio
 Refer to the [latest release](https://github.com/alexmirrington/rules_mypy/releases)
 for information on how to integrate these rules into your monorepo.
 
-Note that the current implementation is roughly equivalent to `mypy --no-silence-site-packages $src_file`
-in terms of the errors it picks up, since symlinked stubs are not actually under a `site-packages` directory
-and are instead treated as source files by the `mypy` binary in this repository.
-To get around this, we ignore all errors from these packages explicitly in `.mypy.ini`.
-
 ## Features and Roadmap
 
 - [x] Integration with `rules_python` and `gazelle` for basic `mypy` type-checking via aspects
 - [x] Integration with `rules_proto_grpc` for protobuf and gRPC type stubs
+- [x] Virtual environment isolation and hermetic toolchain integration
 - [x] Support as an external repo
 - [ ] `bzlmod` support
 
