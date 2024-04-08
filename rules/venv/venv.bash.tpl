@@ -13,10 +13,17 @@ ${INTERPRETER} -m venv --without-pip {VENV_LOCATION}
 
 site_packages="{VENV_LOCATION}/lib/python${PYTHON_MINOR_VERSION}/site-packages"
 
-# TODO(alexmirrington): This is super slow, make it faster by resolving site-packages symlinks differently.
-while read -r line; do
-  basepath="${line##*/}"
-  dirpath=${line%${basepath}}
-  mkdir -p "${site_packages}/${dirpath##*site-packages/}"
-  ln -snf "$(readlink ${line})" "${site_packages}/${line##*site-packages/}"
-done <{DEPS_PATH}
+# TODO(alexmirrington): Move this to some other action or another script and include in runfiles
+{PYTHON_INTERPRETER_PATH} -c "
+import os
+
+with open('{DEPS_PATH}', 'r') as f:
+    for line in f.readlines():
+        site_packages = '${site_packages}'
+        src = os.readlink(line.rstrip())
+        dst = os.path.join(site_packages, line.rstrip().split('site-packages/')[-1])
+        # Make directories and symlink if they don't already exist
+        os.makedirs(name=os.path.dirname(dst), exist_ok=True)
+        if not os.path.exists(dst):
+            os.symlink(src, dst)
+"
