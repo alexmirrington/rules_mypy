@@ -32,7 +32,7 @@ DEFAULT_ATTRS = {
         allow_single_file = True,
     ),
     "_venv": attr.label(
-        default = Label("//rules/mypy:venv"),
+        default = Label("//config:mypy_venv"),
         executable = False,
     ),
 }
