@@ -1,15 +1,13 @@
-load("@rules_mypy_pip_deps//:requirements.bzl", "requirement")
-
-# Allow mypy requirement to be overridden by end user.
-label_flag(
-    name = "mypy",
-    build_setting_default = requirement("mypy"),
-    visibility = ["//visibility:public"],
-)
-
 # Allow mypy config to be overridden by end user.
 label_flag(
     name = "mypy_config",
     build_setting_default = "//:.mypy.ini",
+    visibility = ["//visibility:public"],
+)
+
+# Allow venv to be overridden by end user.
+label_flag(
+    name = "mypy_venv",
+    build_setting_default = "//rules/mypy:venv",
     visibility = ["//visibility:public"],
 )

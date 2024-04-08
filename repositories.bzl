@@ -23,14 +23,6 @@ def rules_mypy_repos():
         ],
     )
 
-    maybe(
-        http_archive,
-        name = "rules_pyvenv",
-        sha256 = "3a3cc6e211850178de02b618d301f3f39d1a9cddb54d499d816ff9ea835a2834",
-        strip_prefix = "rules_pyvenv-1.2",
-        url = "https://github.com/cedarai/rules_pyvenv/archive/refs/tags/v1.2.tar.gz",
-    )
-
 def rules_mypy_internal_repos():
     """Install all bazel dependencies required to build and develop the project."""
     http_archive(
@@ -63,11 +55,4 @@ def rules_mypy_internal_repos():
         sha256 = "2a0860a336ae836b54671cbbe0710eec17c64ef70c4c5a88ccfd47ea6e3739bd",
         strip_prefix = "rules_proto_grpc-4.6.0",
         urls = ["https://github.com/rules-proto-grpc/rules_proto_grpc/releases/download/4.6.0/rules_proto_grpc-4.6.0.tar.gz"],
-    )
-
-    http_archive(
-        name = "rules_pyvenv",
-        sha256 = "3a3cc6e211850178de02b618d301f3f39d1a9cddb54d499d816ff9ea835a2834",
-        strip_prefix = "rules_pyvenv-1.2",
-        url = "https://github.com/cedarai/rules_pyvenv/archive/refs/tags/v1.2.tar.gz",
     )
