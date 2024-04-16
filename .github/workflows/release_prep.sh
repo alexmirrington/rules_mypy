@@ -65,11 +65,11 @@ exports_files([
 
 Example command:
 \`\`\`shell
-bazel build \
-    --@com_alexmirrington_rules_mypy//config:mypy_config=//:.mypy.ini \
-    --@com_alexmirrington_rules_mypy//config:mypy_venv=//:mypy_venv \
-    --aspects @com_alexmirrington_rules_mypy//rules/mypy:mypy.bzl%mypy_aspect \
-    --output_groups=mypy \
+bazel build \\
+    --@com_alexmirrington_rules_mypy//config:mypy_config=//:.mypy.ini \\
+    --@com_alexmirrington_rules_mypy//config:mypy_venv=//:mypy_venv \\
+    --aspects @com_alexmirrington_rules_mypy//rules/mypy:mypy.bzl%mypy_aspect \\
+    --output_groups=mypy \\
     ...
 \`\`\`
 EOF
