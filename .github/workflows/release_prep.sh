@@ -50,14 +50,6 @@ install_rules_mypy_pip_deps()
 
 BUILD snippet:
 \`\`\`starlark
-load("@com_alexmirrington_rules_mypy//rules/venv:venv.bzl", "py_venv")
-
-py_venv(
-    name = "mypy_venv",
-    visibility = ["//visibility:public"],
-    deps = all_requirements,
-)
-
 exports_files([
     ".mypy.ini",
 ])
@@ -67,7 +59,6 @@ Example command:
 \`\`\`shell
 bazel build \\
     --@com_alexmirrington_rules_mypy//config:mypy_config=//:.mypy.ini \\
-    --@com_alexmirrington_rules_mypy//config:mypy_venv=//:mypy_venv \\
     --aspects @com_alexmirrington_rules_mypy//rules/mypy:mypy.bzl%mypy_aspect \\
     --output_groups=mypy \\
     ...
