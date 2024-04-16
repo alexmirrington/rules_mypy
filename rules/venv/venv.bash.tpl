@@ -14,7 +14,7 @@ ${INTERPRETER} -m venv --without-pip {VENV_LOCATION}
 site_packages="{VENV_LOCATION}/lib/python${PYTHON_MINOR_VERSION}/site-packages"
 
 # TODO(alexmirrington): Move this to some other action or another script and include in runfiles
-{PYTHON_INTERPRETER_PATH} -c "
+${INTERPRETER} -c "
 import os
 
 with open('{DEPS_PATH}', 'r') as f:
