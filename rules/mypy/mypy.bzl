@@ -11,7 +11,7 @@ MyPyAspectInfo = provider(
     "TODO: documentation",
     fields = {
         "exe": "Used to pass the rule implementation built exe back to calling aspect.",
-        "out": "Used to pass the dummy output file back to calling aspect.",
+        "out": "Used to pass the output file back to calling aspect.",
     },
 )
 
@@ -164,7 +164,7 @@ def _mypy_rule_impl(ctx, is_aspect = False):
             )
         out = None
     else:
-        out = ctx.actions.declare_file("%s_dummy_out" % ctx.rule.attr.name)
+        out = ctx.actions.declare_file("%s_mypy_out" % ctx.rule.attr.name)
         exe = ctx.actions.declare_file(
             "%s_mypy_exe" % ctx.rule.attr.name,
         )
@@ -172,6 +172,8 @@ def _mypy_rule_impl(ctx, is_aspect = False):
     # Compose a list of the files needed for use. Note that aspect rules can use
     # the project version of mypy however, other rules should fall back on their
     # relative runfiles.
+    # TODO(alexmirrington): Pass transitive runfiles for ctx.attr._venv through to fix mypy_venv issues?
+    # Pretty sure the issue with dynamic libraries is due to cache imports. Clearing ~/.cache/bazel-srs seems to work
     runfiles = ctx.runfiles(
         files = src_files + [ctx.attr._venv[PyVenvInfo].venv_dir] + [mypy_config_file],
     )
