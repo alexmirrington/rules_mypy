@@ -1,0 +1,11 @@
+load("@rules_python//python:defs.bzl", "py_library")
+
+py_library(
+    name = "square",
+    srcs = [
+        "square_fails.py",
+        "square_passes.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = ["@rules_mypy_pip_deps//pandas"],
+)

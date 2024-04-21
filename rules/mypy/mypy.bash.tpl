@@ -15,7 +15,7 @@ main() {
   export MYPYPATH="$(pwd):{MYPYPATH_PATH}"
 
   set +o errexit
-  output=$({PY_INTERPRETER} -m mypy {VERBOSE_OPT}  --bazel {PACKAGE_ROOTS} --config-file {MYPY_INI_PATH} --cache-map {CACHE_MAP_TRIPLES} -- {SRCS} 2>&1)
+  output=$({PY_INTERPRETER} -m mypy {VERBOSE_OPT} --explicit-package-bases --bazel {PACKAGE_ROOTS} --config-file {MYPY_INI_PATH} --cache-map {CACHE_MAP_TRIPLES} -- {SRCS} 2>&1)
   status=$?
   set -o errexit
 
