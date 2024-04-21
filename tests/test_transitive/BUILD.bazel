@@ -1,0 +1,34 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+
+py_binary(
+    name = "main_passes",
+    srcs = ["main_passes.py"],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//tests/test_transitive/square",
+        "@rules_mypy_pip_deps//pandas",
+    ],
+)
+
+py_binary(
+    name = "main_fails",
+    srcs = ["main_fails.py"],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//tests/test_transitive/square",
+        "@rules_mypy_pip_deps//pandas",
+    ],
+)
+
+py_library(
+    name = "test_transitive",
+    srcs = [
+        "main_fails.py",
+        "main_passes.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//tests/test_transitive/square",
+        "@rules_mypy_pip_deps//pandas",
+    ],
+)

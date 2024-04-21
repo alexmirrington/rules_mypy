@@ -87,20 +87,6 @@ def _extract_transitive_deps(deps):
             transitive_deps.append(depset(direct = generated_stub_deps))
     return transitive_deps
 
-def _extract_imports(imports, label):
-    # NOTE: Bazel's implementation of this for py_binary, py_test is at
-    # src/main/java/com/google/devtools/build/lib/bazel/rules/python/BazelPythonSemantics.java
-    mypypath_parts = []
-    for import_ in imports:
-        if import_.startswith("/"):
-            # buildifier: disable=print
-            print("ignoring invalid absolute path '{}'".format(import_))
-        elif import_ in ["", "."]:
-            mypypath_parts.append(label.package)
-        else:
-            mypypath_parts.append("{}/{}".format(label.package, import_))
-    return mypypath_parts
-
 def _prioritize_stubs(files):
     """Include all .py and .pyi files, in the given file list, but prioritizing .pyi files.
 
@@ -129,7 +115,6 @@ def _mypy_rule_impl(ctx, is_aspect = False):
 
     mypy_config_file = ctx.file._mypy_config
 
-    mypypath_parts = []
     direct_src_files = []
 
     transitive_srcs_depsets = []
@@ -139,9 +124,6 @@ def _mypy_rule_impl(ctx, is_aspect = False):
     if hasattr(base_rule.attr, "deps"):
         transitive_srcs_depsets = _extract_transitive_deps(base_rule.attr.deps)
 
-    if hasattr(base_rule.attr, "imports"):
-        mypypath_parts += _extract_imports(base_rule.attr.imports, ctx.label)
-
     final_srcs_depset = depset(transitive = transitive_srcs_depsets +
                                             [depset(direct = direct_src_files)])
     src_files = [f for f in final_srcs_depset.to_list() if not _is_external_src(f)]
@@ -149,8 +131,6 @@ def _mypy_rule_impl(ctx, is_aspect = False):
 
     if not src_files:
         return None
-
-    mypypath = ":".join(mypypath_parts)
 
     # Ideally, a file should be passed into this rule. If this is an executable
     # rule, then we default to the implicit executable file, otherwise we create
@@ -182,6 +162,10 @@ def _mypy_rule_impl(ctx, is_aspect = False):
         sets.make([f.root.path for f in src_files]),
     )
 
+    # Refer to https://mypy.readthedocs.io/en/stable/running_mypy.html#mapping-file-paths-to-modules
+    # especially --explicit-package-bases for info on why we populate the mypy path this way
+    mypypath = ":".join([f for f in src_root_paths if f != ""])
+
     ctx.actions.expand_template(
         template = ctx.file._template,
         output = exe,
@@ -197,7 +181,7 @@ def _mypy_rule_impl(ctx, is_aspect = False):
             "{PY_INTERPRETER}": "%s/bin/python3" % ctx.attr._venv[PyVenvInfo].venv_dir.path,
             "{SRCS}": " ".join([
                 shell.quote(f.path) if is_aspect else shell.quote(f.short_path)
-                for f in src_files
+                for f in direct_src_files
             ]),
             "{VERBOSE_BASH}": "set -x" if BASH_DEBUG else "",
             "{VERBOSE_OPT}": "--verbose" if MYPY_DEBUG else "",
