@@ -1,6 +1,6 @@
 pandas==2.1.4
 pandas-stubs==2.0.3.230814
-mypy==1.8.0
+mypy==1.10.0
 mypy-protobuf==3.5.0
 debugpy==1.8.0
 grpc-stubs==1.53.0.3
