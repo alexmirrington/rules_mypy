@@ -5,7 +5,7 @@
 
 manifest:
   modules_mapping:
-    6c7190bc8b55ffe67f57__mypyc: mypy
+    7f0197f6d050da244d93__mypyc: mypy
     dateutil: python_dateutil
     dateutil.easter: python_dateutil
     dateutil.parser: python_dateutil
@@ -67,6 +67,7 @@ manifest:
     google.protobuf.internal.extension_dict: protobuf
     google.protobuf.internal.field_mask: protobuf
     google.protobuf.internal.message_listener: protobuf
+    google.protobuf.internal.python_edition_defaults: protobuf
     google.protobuf.internal.python_message: protobuf
     google.protobuf.internal.testing_refleaks: protobuf
     google.protobuf.internal.type_checkers: protobuf
@@ -84,6 +85,7 @@ manifest:
     google.protobuf.source_context_pb2: protobuf
     google.protobuf.struct_pb2: protobuf
     google.protobuf.symbol_database: protobuf
+    google.protobuf.testdata: protobuf
     google.protobuf.text_encoding: protobuf
     google.protobuf.text_format: protobuf
     google.protobuf.timestamp_pb2: protobuf
@@ -352,6 +354,11 @@ manifest:
     mypyc.irbuild.visitor: mypy
     mypyc.irbuild.vtable: mypy
     mypyc.lib-rt.setup: mypy
+    mypyc.lower: mypy
+    mypyc.lower.int_ops: mypy
+    mypyc.lower.list_ops: mypy
+    mypyc.lower.misc_ops: mypy
+    mypyc.lower.registry: mypy
     mypyc.namegen: mypy
     mypyc.options: mypy
     mypyc.primitives: mypy
@@ -388,7 +395,9 @@ manifest:
     mypyc.test.test_irbuild: mypy
     mypyc.test.test_ircheck: mypy
     mypyc.test.test_literals: mypy
+    mypyc.test.test_lowering: mypy
     mypyc.test.test_namegen: mypy
+    mypyc.test.test_optimizations: mypy
     mypyc.test.test_pprint: mypy
     mypyc.test.test_rarray: mypy
     mypyc.test.test_refcount: mypy
@@ -399,7 +408,11 @@ manifest:
     mypyc.test.test_typeops: mypy
     mypyc.test.testutil: mypy
     mypyc.transform: mypy
+    mypyc.transform.copy_propagation: mypy
     mypyc.transform.exceptions: mypy
+    mypyc.transform.flag_elimination: mypy
+    mypyc.transform.ir_transform: mypy
+    mypyc.transform.lower: mypy
     mypyc.transform.refcount: mypy
     mypyc.transform.uninit: mypy
     numpy: numpy
@@ -429,7 +442,6 @@ manifest:
     numpy.core.einsumfunc: numpy
     numpy.core.fromnumeric: numpy
     numpy.core.function_base: numpy
-    numpy.core.generate_numpy_api: numpy
     numpy.core.getlimits: numpy
     numpy.core.memmap: numpy
     numpy.core.multiarray: numpy
@@ -437,8 +449,6 @@ manifest:
     numpy.core.numerictypes: numpy
     numpy.core.overrides: numpy
     numpy.core.records: numpy
-    numpy.core.setup: numpy
-    numpy.core.setup_common: numpy
     numpy.core.shape_base: numpy
     numpy.core.tests: numpy
     numpy.core.tests.examples.cython.setup: numpy
@@ -484,6 +494,7 @@ manifest:
     numpy.core.tests.test_nep50_promotions: numpy
     numpy.core.tests.test_numeric: numpy
     numpy.core.tests.test_numerictypes: numpy
+    numpy.core.tests.test_numpy_2_0_compat: numpy
     numpy.core.tests.test_overrides: numpy
     numpy.core.tests.test_print: numpy
     numpy.core.tests.test_protocols: numpy
@@ -615,13 +626,16 @@ manifest:
     numpy.f2py.tests.test_common: numpy
     numpy.f2py.tests.test_compile_function: numpy
     numpy.f2py.tests.test_crackfortran: numpy
+    numpy.f2py.tests.test_data: numpy
     numpy.f2py.tests.test_docs: numpy
     numpy.f2py.tests.test_f2cmap: numpy
     numpy.f2py.tests.test_f2py2e: numpy
+    numpy.f2py.tests.test_isoc: numpy
     numpy.f2py.tests.test_kind: numpy
     numpy.f2py.tests.test_mixed: numpy
     numpy.f2py.tests.test_module_doc: numpy
     numpy.f2py.tests.test_parameter: numpy
+    numpy.f2py.tests.test_pyf_src: numpy
     numpy.f2py.tests.test_quoted_character: numpy
     numpy.f2py.tests.test_regression: numpy
     numpy.f2py.tests.test_return_character: numpy
@@ -638,7 +652,6 @@ manifest:
     numpy.f2py.use_rules: numpy
     numpy.fft: numpy
     numpy.fft.helper: numpy
-    numpy.fft.setup: numpy
     numpy.fft.tests: numpy
     numpy.fft.tests.test_helper: numpy
     numpy.fft.tests.test_pocketfft: numpy
@@ -693,7 +706,6 @@ manifest:
     numpy.linalg: numpy
     numpy.linalg.lapack_lite: numpy
     numpy.linalg.linalg: numpy
-    numpy.linalg.setup: numpy
     numpy.linalg.tests: numpy
     numpy.linalg.tests.test_deprecations: numpy
     numpy.linalg.tests.test_linalg: numpy
@@ -748,7 +760,6 @@ manifest:
     numpy.random: numpy
     numpy.random.bit_generator: numpy
     numpy.random.mtrand: numpy
-    numpy.random.setup: numpy
     numpy.random.tests: numpy
     numpy.random.tests.data: numpy
     numpy.random.tests.test_direct: numpy
@@ -761,7 +772,6 @@ manifest:
     numpy.random.tests.test_regression: numpy
     numpy.random.tests.test_seed_sequence: numpy
     numpy.random.tests.test_smoke: numpy
-    numpy.setup: numpy
     numpy.testing: numpy
     numpy.testing.overrides: numpy
     numpy.testing.print_coercion_tables: numpy
@@ -850,6 +860,7 @@ manifest:
     pandas.core.arraylike: pandas
     pandas.core.arrays: pandas
     pandas.core.arrays.arrow: pandas
+    pandas.core.arrays.arrow.accessors: pandas
     pandas.core.arrays.arrow.array: pandas
     pandas.core.arrays.arrow.extension_types: pandas
     pandas.core.arrays.base: pandas
@@ -1048,11 +1059,11 @@ manifest:
     pandas.tests.api.test_types: pandas
     pandas.tests.apply: pandas
     pandas.tests.apply.common: pandas
-    pandas.tests.apply.conftest: pandas
     pandas.tests.apply.test_frame_apply: pandas
     pandas.tests.apply.test_frame_apply_relabeling: pandas
     pandas.tests.apply.test_frame_transform: pandas
     pandas.tests.apply.test_invalid_arg: pandas
+    pandas.tests.apply.test_numba: pandas
     pandas.tests.apply.test_series_apply: pandas
     pandas.tests.apply.test_series_apply_relabeling: pandas
     pandas.tests.apply.test_series_transform: pandas
@@ -1081,7 +1092,6 @@ manifest:
     pandas.tests.arrays.boolean.test_reduction: pandas
     pandas.tests.arrays.boolean.test_repr: pandas
     pandas.tests.arrays.categorical: pandas
-    pandas.tests.arrays.categorical.conftest: pandas
     pandas.tests.arrays.categorical.test_algos: pandas
     pandas.tests.arrays.categorical.test_analytics: pandas
     pandas.tests.arrays.categorical.test_api: pandas
@@ -1126,8 +1136,10 @@ manifest:
     pandas.tests.arrays.integer.test_repr: pandas
     pandas.tests.arrays.interval: pandas
     pandas.tests.arrays.interval.test_astype: pandas
+    pandas.tests.arrays.interval.test_formats: pandas
     pandas.tests.arrays.interval.test_interval: pandas
-    pandas.tests.arrays.interval.test_ops: pandas
+    pandas.tests.arrays.interval.test_interval_pyarrow: pandas
+    pandas.tests.arrays.interval.test_overlaps: pandas
     pandas.tests.arrays.masked: pandas
     pandas.tests.arrays.masked.test_arithmetic: pandas
     pandas.tests.arrays.masked.test_arrow_compat: pandas
@@ -1192,6 +1204,7 @@ manifest:
     pandas.tests.copy_view.index.test_timedeltaindex: pandas
     pandas.tests.copy_view.test_array: pandas
     pandas.tests.copy_view.test_astype: pandas
+    pandas.tests.copy_view.test_chained_assignment_deprecation: pandas
     pandas.tests.copy_view.test_clip: pandas
     pandas.tests.copy_view.test_constructors: pandas
     pandas.tests.copy_view.test_core_functionalities: pandas
@@ -1324,6 +1337,7 @@ manifest:
     pandas.tests.frame.methods.test_get_numeric_data: pandas
     pandas.tests.frame.methods.test_head_tail: pandas
     pandas.tests.frame.methods.test_infer_objects: pandas
+    pandas.tests.frame.methods.test_info: pandas
     pandas.tests.frame.methods.test_interpolate: pandas
     pandas.tests.frame.methods.test_is_homogeneous_dtype: pandas
     pandas.tests.frame.methods.test_isetitem: pandas
@@ -1373,6 +1387,7 @@ manifest:
     pandas.tests.frame.test_alter_axes: pandas
     pandas.tests.frame.test_api: pandas
     pandas.tests.frame.test_arithmetic: pandas
+    pandas.tests.frame.test_arrow_interface: pandas
     pandas.tests.frame.test_block_internals: pandas
     pandas.tests.frame.test_constructors: pandas
     pandas.tests.frame.test_cumulative: pandas
@@ -1382,7 +1397,7 @@ manifest:
     pandas.tests.frame.test_npfuncs: pandas
     pandas.tests.frame.test_query_eval: pandas
     pandas.tests.frame.test_reductions: pandas
-    pandas.tests.frame.test_repr_info: pandas
+    pandas.tests.frame.test_repr: pandas
     pandas.tests.frame.test_stack_unstack: pandas
     pandas.tests.frame.test_subclass: pandas
     pandas.tests.frame.test_ufunc: pandas
@@ -1403,37 +1418,42 @@ manifest:
     pandas.tests.groupby.aggregate.test_numba: pandas
     pandas.tests.groupby.aggregate.test_other: pandas
     pandas.tests.groupby.conftest: pandas
-    pandas.tests.groupby.test_any_all: pandas
+    pandas.tests.groupby.methods: pandas
+    pandas.tests.groupby.methods.test_corrwith: pandas
+    pandas.tests.groupby.methods.test_describe: pandas
+    pandas.tests.groupby.methods.test_groupby_shift_diff: pandas
+    pandas.tests.groupby.methods.test_is_monotonic: pandas
+    pandas.tests.groupby.methods.test_nlargest_nsmallest: pandas
+    pandas.tests.groupby.methods.test_nth: pandas
+    pandas.tests.groupby.methods.test_quantile: pandas
+    pandas.tests.groupby.methods.test_rank: pandas
+    pandas.tests.groupby.methods.test_sample: pandas
+    pandas.tests.groupby.methods.test_size: pandas
+    pandas.tests.groupby.methods.test_skew: pandas
+    pandas.tests.groupby.methods.test_value_counts: pandas
+    pandas.tests.groupby.test_all_methods: pandas
     pandas.tests.groupby.test_api: pandas
     pandas.tests.groupby.test_apply: pandas
     pandas.tests.groupby.test_apply_mutate: pandas
     pandas.tests.groupby.test_bin_groupby: pandas
     pandas.tests.groupby.test_categorical: pandas
     pandas.tests.groupby.test_counting: pandas
+    pandas.tests.groupby.test_cumulative: pandas
     pandas.tests.groupby.test_filters: pandas
-    pandas.tests.groupby.test_function: pandas
     pandas.tests.groupby.test_groupby: pandas
     pandas.tests.groupby.test_groupby_dropna: pandas
-    pandas.tests.groupby.test_groupby_shift_diff: pandas
     pandas.tests.groupby.test_groupby_subclass: pandas
     pandas.tests.groupby.test_grouping: pandas
     pandas.tests.groupby.test_index_as_string: pandas
     pandas.tests.groupby.test_indexing: pandas
     pandas.tests.groupby.test_libgroupby: pandas
-    pandas.tests.groupby.test_min_max: pandas
     pandas.tests.groupby.test_missing: pandas
-    pandas.tests.groupby.test_nth: pandas
     pandas.tests.groupby.test_numba: pandas
-    pandas.tests.groupby.test_nunique: pandas
+    pandas.tests.groupby.test_numeric_only: pandas
     pandas.tests.groupby.test_pipe: pandas
-    pandas.tests.groupby.test_quantile: pandas
     pandas.tests.groupby.test_raises: pandas
-    pandas.tests.groupby.test_rank: pandas
-    pandas.tests.groupby.test_sample: pandas
-    pandas.tests.groupby.test_size: pandas
-    pandas.tests.groupby.test_skew: pandas
+    pandas.tests.groupby.test_reductions: pandas
     pandas.tests.groupby.test_timegrouper: pandas
-    pandas.tests.groupby.test_value_counts: pandas
     pandas.tests.groupby.transform: pandas
     pandas.tests.groupby.transform.test_numba: pandas
     pandas.tests.groupby.transform.test_transform: pandas
@@ -1457,6 +1477,7 @@ manifest:
     pandas.tests.indexes.categorical.test_indexing: pandas
     pandas.tests.indexes.categorical.test_map: pandas
     pandas.tests.indexes.categorical.test_reindex: pandas
+    pandas.tests.indexes.categorical.test_setops: pandas
     pandas.tests.indexes.conftest: pandas
     pandas.tests.indexes.datetimelike_: pandas
     pandas.tests.indexes.datetimelike_.test_drop_duplicates: pandas
@@ -1468,29 +1489,37 @@ manifest:
     pandas.tests.indexes.datetimelike_.test_value_counts: pandas
     pandas.tests.indexes.datetimes: pandas
     pandas.tests.indexes.datetimes.methods: pandas
+    pandas.tests.indexes.datetimes.methods.test_asof: pandas
     pandas.tests.indexes.datetimes.methods.test_astype: pandas
+    pandas.tests.indexes.datetimes.methods.test_delete: pandas
     pandas.tests.indexes.datetimes.methods.test_factorize: pandas
     pandas.tests.indexes.datetimes.methods.test_fillna: pandas
     pandas.tests.indexes.datetimes.methods.test_insert: pandas
     pandas.tests.indexes.datetimes.methods.test_isocalendar: pandas
+    pandas.tests.indexes.datetimes.methods.test_map: pandas
+    pandas.tests.indexes.datetimes.methods.test_normalize: pandas
     pandas.tests.indexes.datetimes.methods.test_repeat: pandas
+    pandas.tests.indexes.datetimes.methods.test_resolution: pandas
+    pandas.tests.indexes.datetimes.methods.test_round: pandas
     pandas.tests.indexes.datetimes.methods.test_shift: pandas
     pandas.tests.indexes.datetimes.methods.test_snap: pandas
     pandas.tests.indexes.datetimes.methods.test_to_frame: pandas
+    pandas.tests.indexes.datetimes.methods.test_to_julian_date: pandas
     pandas.tests.indexes.datetimes.methods.test_to_period: pandas
+    pandas.tests.indexes.datetimes.methods.test_to_pydatetime: pandas
     pandas.tests.indexes.datetimes.methods.test_to_series: pandas
-    pandas.tests.indexes.datetimes.test_asof: pandas
+    pandas.tests.indexes.datetimes.methods.test_tz_convert: pandas
+    pandas.tests.indexes.datetimes.methods.test_tz_localize: pandas
+    pandas.tests.indexes.datetimes.methods.test_unique: pandas
+    pandas.tests.indexes.datetimes.test_arithmetic: pandas
     pandas.tests.indexes.datetimes.test_constructors: pandas
     pandas.tests.indexes.datetimes.test_date_range: pandas
     pandas.tests.indexes.datetimes.test_datetime: pandas
-    pandas.tests.indexes.datetimes.test_datetimelike: pandas
-    pandas.tests.indexes.datetimes.test_delete: pandas
     pandas.tests.indexes.datetimes.test_formats: pandas
     pandas.tests.indexes.datetimes.test_freq_attr: pandas
     pandas.tests.indexes.datetimes.test_indexing: pandas
+    pandas.tests.indexes.datetimes.test_iter: pandas
     pandas.tests.indexes.datetimes.test_join: pandas
-    pandas.tests.indexes.datetimes.test_map: pandas
-    pandas.tests.indexes.datetimes.test_misc: pandas
     pandas.tests.indexes.datetimes.test_npfuncs: pandas
     pandas.tests.indexes.datetimes.test_ops: pandas
     pandas.tests.indexes.datetimes.test_partial_slicing: pandas
@@ -1499,10 +1528,8 @@ manifest:
     pandas.tests.indexes.datetimes.test_scalar_compat: pandas
     pandas.tests.indexes.datetimes.test_setops: pandas
     pandas.tests.indexes.datetimes.test_timezones: pandas
-    pandas.tests.indexes.datetimes.test_unique: pandas
     pandas.tests.indexes.interval: pandas
     pandas.tests.indexes.interval.test_astype: pandas
-    pandas.tests.indexes.interval.test_base: pandas
     pandas.tests.indexes.interval.test_constructors: pandas
     pandas.tests.indexes.interval.test_equals: pandas
     pandas.tests.indexes.interval.test_formats: pandas
@@ -1603,6 +1630,7 @@ manifest:
     pandas.tests.indexes.timedeltas.methods.test_insert: pandas
     pandas.tests.indexes.timedeltas.methods.test_repeat: pandas
     pandas.tests.indexes.timedeltas.methods.test_shift: pandas
+    pandas.tests.indexes.timedeltas.test_arithmetic: pandas
     pandas.tests.indexes.timedeltas.test_constructors: pandas
     pandas.tests.indexes.timedeltas.test_delete: pandas
     pandas.tests.indexes.timedeltas.test_formats: pandas
@@ -1660,7 +1688,6 @@ manifest:
     pandas.tests.io: pandas
     pandas.tests.io.conftest: pandas
     pandas.tests.io.excel: pandas
-    pandas.tests.io.excel.conftest: pandas
     pandas.tests.io.excel.test_odf: pandas
     pandas.tests.io.excel.test_odswriter: pandas
     pandas.tests.io.excel.test_openpyxl: pandas
@@ -1686,9 +1713,8 @@ manifest:
     pandas.tests.io.formats.test_css: pandas
     pandas.tests.io.formats.test_eng_formatting: pandas
     pandas.tests.io.formats.test_format: pandas
-    pandas.tests.io.formats.test_info: pandas
+    pandas.tests.io.formats.test_ipython_compat: pandas
     pandas.tests.io.formats.test_printing: pandas
-    pandas.tests.io.formats.test_series_info: pandas
     pandas.tests.io.formats.test_to_csv: pandas
     pandas.tests.io.formats.test_to_excel: pandas
     pandas.tests.io.formats.test_to_html: pandas
@@ -1780,8 +1806,10 @@ manifest:
     pandas.tests.io.test_compression: pandas
     pandas.tests.io.test_feather: pandas
     pandas.tests.io.test_fsspec: pandas
+    pandas.tests.io.test_gbq: pandas
     pandas.tests.io.test_gcs: pandas
     pandas.tests.io.test_html: pandas
+    pandas.tests.io.test_http_headers: pandas
     pandas.tests.io.test_orc: pandas
     pandas.tests.io.test_parquet: pandas
     pandas.tests.io.test_pickle: pandas
@@ -1789,7 +1817,6 @@ manifest:
     pandas.tests.io.test_spss: pandas
     pandas.tests.io.test_sql: pandas
     pandas.tests.io.test_stata: pandas
-    pandas.tests.io.test_user_agent: pandas
     pandas.tests.io.xml: pandas
     pandas.tests.io.xml.conftest: pandas
     pandas.tests.io.xml.test_to_xml: pandas
@@ -1799,6 +1826,7 @@ manifest:
     pandas.tests.libs.test_hashtable: pandas
     pandas.tests.libs.test_join: pandas
     pandas.tests.libs.test_lib: pandas
+    pandas.tests.libs.test_libalgos: pandas
     pandas.tests.plotting: pandas
     pandas.tests.plotting.common: pandas
     pandas.tests.plotting.conftest: pandas
@@ -1866,33 +1894,50 @@ manifest:
     pandas.tests.scalar: pandas
     pandas.tests.scalar.interval: pandas
     pandas.tests.scalar.interval.test_arithmetic: pandas
+    pandas.tests.scalar.interval.test_constructors: pandas
+    pandas.tests.scalar.interval.test_contains: pandas
+    pandas.tests.scalar.interval.test_formats: pandas
     pandas.tests.scalar.interval.test_interval: pandas
-    pandas.tests.scalar.interval.test_ops: pandas
+    pandas.tests.scalar.interval.test_overlaps: pandas
     pandas.tests.scalar.period: pandas
+    pandas.tests.scalar.period.test_arithmetic: pandas
     pandas.tests.scalar.period.test_asfreq: pandas
     pandas.tests.scalar.period.test_period: pandas
     pandas.tests.scalar.test_na_scalar: pandas
     pandas.tests.scalar.test_nat: pandas
     pandas.tests.scalar.timedelta: pandas
+    pandas.tests.scalar.timedelta.methods: pandas
+    pandas.tests.scalar.timedelta.methods.test_as_unit: pandas
+    pandas.tests.scalar.timedelta.methods.test_round: pandas
     pandas.tests.scalar.timedelta.test_arithmetic: pandas
     pandas.tests.scalar.timedelta.test_constructors: pandas
     pandas.tests.scalar.timedelta.test_formats: pandas
     pandas.tests.scalar.timedelta.test_timedelta: pandas
     pandas.tests.scalar.timestamp: pandas
+    pandas.tests.scalar.timestamp.methods: pandas
+    pandas.tests.scalar.timestamp.methods.test_as_unit: pandas
+    pandas.tests.scalar.timestamp.methods.test_normalize: pandas
+    pandas.tests.scalar.timestamp.methods.test_replace: pandas
+    pandas.tests.scalar.timestamp.methods.test_round: pandas
+    pandas.tests.scalar.timestamp.methods.test_timestamp_method: pandas
+    pandas.tests.scalar.timestamp.methods.test_to_julian_date: pandas
+    pandas.tests.scalar.timestamp.methods.test_to_pydatetime: pandas
+    pandas.tests.scalar.timestamp.methods.test_tz_convert: pandas
+    pandas.tests.scalar.timestamp.methods.test_tz_localize: pandas
     pandas.tests.scalar.timestamp.test_arithmetic: pandas
     pandas.tests.scalar.timestamp.test_comparisons: pandas
     pandas.tests.scalar.timestamp.test_constructors: pandas
     pandas.tests.scalar.timestamp.test_formats: pandas
-    pandas.tests.scalar.timestamp.test_rendering: pandas
     pandas.tests.scalar.timestamp.test_timestamp: pandas
     pandas.tests.scalar.timestamp.test_timezones: pandas
-    pandas.tests.scalar.timestamp.test_unary_ops: pandas
     pandas.tests.series: pandas
     pandas.tests.series.accessors: pandas
     pandas.tests.series.accessors.test_cat_accessor: pandas
     pandas.tests.series.accessors.test_dt_accessor: pandas
+    pandas.tests.series.accessors.test_list_accessor: pandas
     pandas.tests.series.accessors.test_sparse_accessor: pandas
     pandas.tests.series.accessors.test_str_accessor: pandas
+    pandas.tests.series.accessors.test_struct_accessor: pandas
     pandas.tests.series.indexing: pandas
     pandas.tests.series.indexing.test_datetime: pandas
     pandas.tests.series.indexing.test_delitem: pandas
@@ -1913,6 +1958,7 @@ manifest:
     pandas.tests.series.methods.test_astype: pandas
     pandas.tests.series.methods.test_autocorr: pandas
     pandas.tests.series.methods.test_between: pandas
+    pandas.tests.series.methods.test_case_when: pandas
     pandas.tests.series.methods.test_clip: pandas
     pandas.tests.series.methods.test_combine: pandas
     pandas.tests.series.methods.test_combine_first: pandas
@@ -1934,6 +1980,7 @@ manifest:
     pandas.tests.series.methods.test_get_numeric_data: pandas
     pandas.tests.series.methods.test_head_tail: pandas
     pandas.tests.series.methods.test_infer_objects: pandas
+    pandas.tests.series.methods.test_info: pandas
     pandas.tests.series.methods.test_interpolate: pandas
     pandas.tests.series.methods.test_is_monotonic: pandas
     pandas.tests.series.methods.test_is_unique: pandas
@@ -1978,12 +2025,12 @@ manifest:
     pandas.tests.series.test_arithmetic: pandas
     pandas.tests.series.test_constructors: pandas
     pandas.tests.series.test_cumulative: pandas
+    pandas.tests.series.test_formats: pandas
     pandas.tests.series.test_iteration: pandas
     pandas.tests.series.test_logical_ops: pandas
     pandas.tests.series.test_missing: pandas
     pandas.tests.series.test_npfuncs: pandas
     pandas.tests.series.test_reductions: pandas
-    pandas.tests.series.test_repr: pandas
     pandas.tests.series.test_subclass: pandas
     pandas.tests.series.test_ufunc: pandas
     pandas.tests.series.test_unary: pandas
@@ -2029,7 +2076,6 @@ manifest:
     pandas.tests.tseries.holiday.test_observance: pandas
     pandas.tests.tseries.offsets: pandas
     pandas.tests.tseries.offsets.common: pandas
-    pandas.tests.tseries.offsets.conftest: pandas
     pandas.tests.tseries.offsets.test_business_day: pandas
     pandas.tests.tseries.offsets.test_business_hour: pandas
     pandas.tests.tseries.offsets.test_business_month: pandas
@@ -2059,10 +2105,12 @@ manifest:
     pandas.tests.tslibs.test_libfrequencies: pandas
     pandas.tests.tslibs.test_liboffsets: pandas
     pandas.tests.tslibs.test_np_datetime: pandas
+    pandas.tests.tslibs.test_npy_units: pandas
     pandas.tests.tslibs.test_parse_iso8601: pandas
     pandas.tests.tslibs.test_parsing: pandas
-    pandas.tests.tslibs.test_period_asfreq: pandas
+    pandas.tests.tslibs.test_period: pandas
     pandas.tests.tslibs.test_resolution: pandas
+    pandas.tests.tslibs.test_strptime: pandas
     pandas.tests.tslibs.test_timedeltas: pandas
     pandas.tests.tslibs.test_timezones: pandas
     pandas.tests.tslibs.test_to_offset: pandas
@@ -2084,10 +2132,8 @@ manifest:
     pandas.tests.util.test_deprecate_nonkeyword_arguments: pandas
     pandas.tests.util.test_doc: pandas
     pandas.tests.util.test_hashing: pandas
-    pandas.tests.util.test_make_objects: pandas
     pandas.tests.util.test_numba: pandas
     pandas.tests.util.test_rewrite_warning: pandas
-    pandas.tests.util.test_safe_import: pandas
     pandas.tests.util.test_shares_memory: pandas
     pandas.tests.util.test_show_versions: pandas
     pandas.tests.util.test_util: pandas
@@ -2158,4 +2204,4 @@ manifest:
     tzdata.zoneinfo.US: tzdata
   pip_repository:
     name: rules_mypy_pip_deps
-integrity: 364b7d94623265e32707a3ddd11b97be148a3596986a1bb5fcde5b937a97d839
+integrity: 27d5df2994f46cddeae8f0673b48fa9d0dd85af264e6078e743962e8e87960a1
