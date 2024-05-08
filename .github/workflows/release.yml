@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
 
       - name: ✨ Lint
-        uses: trunk-io/trunk-action@da67635060feab46c164bc130690e61864a5d13b # v1
+        uses: trunk-io/trunk-action@bd686325615e9cf5a4ef98372ba94a472f9b5238 # v1
 
       - name: 🐍 Set up Bazelisk
         uses: bazelbuild/setup-bazelisk@b39c379c82683a5f25d34f0d062761f62693e0b2 # v3
