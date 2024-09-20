@@ -1,4 +1,4 @@
-pandas==2.2.2
+pandas==2.2.3
 pandas-stubs==2.2.1.240316
 mypy==1.10.0
 mypy-protobuf==3.6.0
