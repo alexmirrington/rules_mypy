@@ -45,9 +45,9 @@ def rules_mypy_internal_repos():
 
     http_archive(
         name = "rules_python_gazelle_plugin",
-        sha256 = "4912ced70dc1a2a8e4b86cec233b192ca053e82bc72d877b98e126156e8f228d",
-        strip_prefix = "rules_python-0.32.2/gazelle",
-        url = "https://github.com/bazelbuild/rules_python/releases/download/0.32.2/rules_python-0.32.2.tar.gz",
+        sha256 = "ca77768989a7f311186a29747e3e95c936a41dffac779aff6b443db22290d913",
+        strip_prefix = "rules_python-0.36.0/gazelle",
+        url = "https://github.com/bazelbuild/rules_python/releases/download/0.36.0/rules_python-0.36.0.tar.gz",
     )
 
     http_archive(
