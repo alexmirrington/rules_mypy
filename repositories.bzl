@@ -52,7 +52,7 @@ def rules_mypy_internal_repos():
 
     http_archive(
         name = "rules_proto_grpc",
-        sha256 = "2a0860a336ae836b54671cbbe0710eec17c64ef70c4c5a88ccfd47ea6e3739bd",
-        strip_prefix = "rules_proto_grpc-4.6.0",
-        urls = ["https://github.com/rules-proto-grpc/rules_proto_grpc/releases/download/4.6.0/rules_proto_grpc-4.6.0.tar.gz"],
+        sha256 = "38a51a3183dffa5323bbf07b7d5473fa1f06707cf59607888f36cb735ab39cd8",
+        strip_prefix = "rules_proto_grpc-5.0.1",
+        urls = ["https://github.com/rules-proto-grpc/rules_proto_grpc/releases/download/5.0.1/rules_proto_grpc-5.0.1.tar.gz"],
     )
