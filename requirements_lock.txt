@@ -28,9 +28,9 @@ debugpy==1.8.1 \
     --hash=sha256:f696d6be15be87aef621917585f9bb94b1dc9e8aced570db1b8a6fc14e8f9b42 \
     --hash=sha256:fd97ed11a4c7f6d042d320ce03d83b20c3fb40da892f994bc041bbc415d7a099
     # via -r requirements.txt
-grpc-stubs==1.53.0.5 \
-    --hash=sha256:04183fb65a1b166a1febb9627e3d9647d3926ccc2dfe049fe7b6af243428dbe1 \
-    --hash=sha256:3e1b642775cbc3e0c6332cfcedfccb022176db87e518757bef3a1241397be406
+grpc-stubs==1.53.0.6 \
+    --hash=sha256:3ffc5a6b5bd84ac46f3d84e2434e97936c1262b47b71b462bdedc43caaf227e1 \
+    --hash=sha256:70a0840747bd73c2c82fe819699bbf4fcf6d59bd0ed27a4713a240e0c697e1ff
     # via -r requirements.txt
 grpcio==1.58.0 \
     --hash=sha256:002f228d197fea12797a14e152447044e14fb4fdb2eb5d6cfa496f29ddbf79ef \
